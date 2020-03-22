@@ -11,7 +11,7 @@ function getRaces() {
 
             try {
                 console.log(ajax.responseText);
-                let races = JSON.parse(ajax.responseText);
+                var races = JSON.parse(ajax.responseText);
                 console.log(races);                
 
             } catch (err) {
