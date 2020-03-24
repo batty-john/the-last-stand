@@ -10,35 +10,91 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => {
-    characters = getCharacters();
-    party = getParty();
-    games = getGames();
-    res.render('pages/index')
+
+    getMenuData(function (result) {
+      console.log(result.characters);
+      console.log(result.characters.length);
+      
+      characters = result.characters;
+      party = result.party;
+      games = result.games;
+      res.render('pages/index')
+    })
+
   })
   .get('/createCharacter', (req,res) => {
-    characters = getCharacters();
-    party = getParty();
-    games = getGames();
-    res.render('pages/createCharacter')
+
+    getMenuData(function () {
+      res.render('pages/createCharacter')
+    })
+      
+
   })
   .get('/getRaces', (request, response) => {
 
-    
+            //let sql = 'SELECT * FROM character_races c INNER JOIN user_orders orders ON c.module_id = orders.module_id WHERE orders.user_account_id = $1'
+    let id = (request.query.id ? request.query.id : 0)
 
-            getRaces(function(err, result) {
+    let sql = 'SELECT * FROM character_races';
 
-                response.end(JSON.stringify(result))
+    if (id != 0) {
+      sql += (" WHERE character_races_id = " + id);
+    }
 
-            })
- 
-    
+
+    sqlQuery(sql, function(err, result) {
+
+      response.end(JSON.stringify(result))
+
+    })
+  })
+  .get('/getClasses', (request, response) => {
+
+    let id = (request.query.id ? request.query.id : 0)
+
+    //let sql = 'SELECT * FROM character_classes c INNER JOIN user_orders orders ON c.module_id = orders.module_id WHERE orders.user_account_id = $1'
+    let sql = 'SELECT * FROM character_classes';
+
+    if (id != 0) {
+      sql += (" WHERE character_classes_id = " + id);
+    }
+
+    sqlQuery(sql, function(err, result) {
+
+        response.end(JSON.stringify(result))
+
+    })
+})
+.get('/getBackgrounds', (request, response) => {
+
+  let id = (request.query.id ? request.query.id : 0)
+
+  //let sql = 'SELECT * FROM character_classes c INNER JOIN user_orders orders ON c.module_id = orders.module_id WHERE orders.user_account_id = $1'
+  let sql = 'SELECT * FROM character_backgrounds';
+
+  if (id != 0) {
+    sql += (" WHERE character_backgrounds_id = " + id); 
+  }
+
+  sqlQuery(sql, function(err, result) {
+
+      response.end(JSON.stringify(result))
+
+  })
+})
+.post('/submitNewCharacter', (req, res) => {
+
+  
+
 })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
-  function getRaces (callback) { 
-    //let sql = 'SELECT * FROM character_races c INNER JOIN user_orders orders ON c.module_id = orders.module_id WHERE orders.user_account_id = $1'
-      let sql = 'SELECT * FROM character_races';
+  function sqlQuery (sql, callback) { 
+    
+    
+    console.log(sql);
+
     pool.query(sql, (err, res) => {
         if (err) {
             callback(err)
@@ -50,23 +106,50 @@ express()
 }
 
 
+  function getMenuData(callback) {
+    var completed = 0,
+     data = [];
+    let partysql = "SELECT * FROM player_characters pc INNER JOIN party_members pm on pc.owner_id = pm.player_id WHERE pc.party_id = 1 AND  pm.party_id = 1;"
 
-  function getCharacters() {
-    return [{name:"Griffhorn", race: "minotaur"}]
-  }
+    sqlQuery(partysql, function(err, result) {
 
-  function getParty() {
-    return [
-      {name: "Griffhorn", race: "Minotaur"},
-      {name: "Shaladon", race: "Myr"},
-      {name: "Revin", race: "Dark Elf"}
-    ]
-  }
+    
+    data.party = result;
+    completed +=1;
 
-  function getGames() {
-    return [
-      {name: "Adventures in Sogored", lastPlayed: "Today", gameMaster: "John Batty"},
-      {name: "Dawnforge", lastPlayed: "2 days", gameMaster: "Luke Batty"},
-      {name: "Spectria", lastPlayed: "11 Months Ago", gameMaster: "Dawson Norton"}
-    ]
+    if(completed === 3) {
+      callback(data)
+    }
+
+
+    })
+
+    //let charactersql = "SELECT * from player_characters WHERE owner_id = 1";
+    let charactersql = "SELECT * from player_characters WHERE player_character_id = 6";
+    console.log("Getting Characters")
+    sqlQuery(charactersql, function(err, result) {
+
+    
+      console.log("Returning Characters");
+      data.characters = result;
+      completed +=1;
+    if (completed ===3) {
+      callback(data);
+    }
+
+    })
+
+    let gameSQL = "SELECT * FROM games";
+
+    sqlQuery(gameSQL, function(err, result) {
+      data.games =  result;
+      completed += 1;
+      if(completed === 3) {
+        callback(data)
+      }
+
+    })
+    
+
+
   }

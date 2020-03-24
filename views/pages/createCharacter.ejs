@@ -27,6 +27,10 @@
             #races-deck .wrap-card {
                 flex-basis: 260px;
             }
+
+            .hidden {
+                display: none;
+            }
         </style>
 
     </head>
@@ -61,8 +65,7 @@
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">The Last Stand</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">New Character</a></li>
-                                            <li class="breadcrumb-item active">Choose a Race</li>
+                                            <li class="breadcrumb-item active">New Character</li>
                                         </ol>
                                     </div>
                                     <h4 class="page-title">New Character</h4>
@@ -71,57 +74,53 @@
                         </div>     
                         <!-- end page title --> 
                     
-                        <div class="row">
+                        <form action="/submitNewCharacter" method="POST" class="row">
                             <div class="col-12">
                                 <div class="card-box">
-                                    <div class="timeline">
-                                        <article class="timeline-item alt">
+                                    <div class="timeline" id="timeline">
+
+                                        <article class="timeline-item alt" id="beginningButton">
                                             <div class="text-right">
                                                 <div class="time-show first">
-                                                    <a href="#" class="btn btn-gradient width-lg">Beginning</a>
+                                                    <a href="javascript: void(0)" onclick="startForm()" class="btn btn-gradient width-lg">Let's Get Started</a>
                                                 </div>
                                             </div>
                                         </article>
-                                        <article class="timeline-item alt">
+                                        
+                                        <article class="timeline-item alt" style="visibility: hidden;">
                                             <div class="timeline-desk">
-                                                <div class="panel">
-                                                    <div class="timeline-box">
-                                                        <span class="arrow-alt"></span>
-                                                        <span class="timeline-icon"><i class="mdi mdi-adjust"></i></span>
-                                                        <h4 class="">Minotaur</h4>
-                                                        <p class="timeline-date text-muted"><small>Race</small></p>
-                                                        <p>Dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? </p>
-                                                        <table class="race-stat-table">
-                                                            <tr>
-                                                                <th>Str</th>
-                                                                <th>Dex</th>
-                                                                <th>Con</th>
-                                                                <th>Speed</th>
-                                                                <th>Int</th>
-                                                                <th>Wis</th>
-                                                                <th>Cha</th>
-                                                                <th>Wit</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>10</td>
-                                                                <td>20</td>
-                                                                <td>10</td>
-                                                                <td>20</td>
-                                                                <td>10</td>
-                                                                <td>20</td>
-                                                                <td>10</td>
-                                                                <td>20</td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+                                                
+                                            </div>
+                                        </article>
+
+                                        <article class="timeline-item alt hidden" id="chooseRaceButton">
+                                            <div class="text-right">
+                                                <div class="time-show">
+                                                    <p onclick="getRaces()" class="btn btn-gradient width-lg">Choose A Race</p>
                                                 </div>
                                             </div>
                                         </article>
 
-                                        <article class="timeline-item alt">
+                                        <article class="timeline-item alt hidden" id="chooseBackgroundButton">
                                             <div class="text-right">
                                                 <div class="time-show">
-                                                    <a href="#" class="btn btn-gradient width-lg">Choose A Race</a>
+                                                    <a href="javascript: void(0);" onclick="getBackgrounds()" class="btn btn-gradient width-lg">Tell Us Your Background</a>
+                                                </div>
+                                            </div>
+                                        </article>
+
+                                        <article class="timeline-item alt hidden" id="chooseClassButton">
+                                            <div class="text-right">
+                                                <div class="time-show">
+                                                    <a href="javascript: void(0);" onclick="getClasses()" class="btn btn-gradient width-lg">Choose A Class</a>
+                                                </div>
+                                            </div>
+                                        </article>
+
+                                        <article class="timeline-item alt hidden" id="finalizeCharacter">
+                                            <div class="text-right">
+                                                <div class="time-show">
+                                                    <a href="javascript: void(0);" onclick="finalizeForm()" class="btn btn-gradient width-lg">Finalize Name And Appearance</a>
                                                 </div>
                                             </div>
                                         </article>
@@ -293,9 +292,64 @@
                                             
                                         </div>
                                     </div>
+                                    <div>
+                                        <div id="vanity" class="hidden">
+                                            <h2 class="text-center">Name and Appearance</h2>
+                                            <div class="form-group">
+                                                <label for="name">Character Name</label>
+                                                <input type="text" id="name" class="form-control" placeholder="Name">
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <label for="hair">Hair</label>
+                                                    <input placeholder="Black" type="text" id="hair" class="form-control"> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="eyes">Eyes</label>
+                                                    <input placeholder="Blue" type="text" id="eyes" class="form-control"> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="skin">Skin</label>
+                                                    <input placeholder="Pale" type="text" id="skin" class="form-control"> 
+                                                </div>
+                                            </div>
+
+                                            <label for="height">Height</label>
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <input placeholder="6'" type="number" id="feet" class="form-control"><label for="feet">feet</label> 
+                                                </div>
+                                                <div class="col">
+                                                    <input placeholder="9&quot;" type="number" id="inches" class="form-control"><label for="inches">inches</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="weight">Weight</label>
+                                                <input type="number" id="weight" class="form-control" placeholder="130"> <label for="weight">lbs</label>
+                                            </div>
+
+                                            
+                                            <div class="form-group">
+                                               <button type="button" id="vanity-form-button" class="btn btn-success float-right">Continue</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <button id="submit-button" onclick="submit()" class="btn btn-success float-right hidden">Create Character</button>
+                                             </div>
+
+
+                                            
+
+
+
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                     
                 
