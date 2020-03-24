@@ -12,13 +12,9 @@ express()
   .get('/', (req, res) => {
 
     getMenuData(function (result) {
-      console.log(result.characters);
-      console.log(result.characters.length);
-      
-      characters = result.characters;
-      party = result.party;
-      games = result.games;
-      res.render('pages/index')
+      getMenuData(function () {
+        res.render('pages/createCharacter')
+      })
     })
 
   })
