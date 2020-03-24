@@ -2,8 +2,10 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const { Pool } = require('pg')
-const connectionString = process.env.DATABASE_URL || 'postgres://pdalrvwbtruhfe:b1e3a44f14fcc8b4fee09854f31859cdba2fa828cc332cb6704305667b8f6a1d@ec2-52-86-33-50.compute-1.amazonaws.com:5432/dali8un83c1hi5?ssl=true';
+const DATABASE_URL  = 'postgres://pdalrvwbtruhfe:b1e3a44f14fcc8b4fee09854f31859cdba2fa828cc332cb6704305667b8f6a1d@ec2-52-86-33-50.compute-1.amazonaws.com:5432/dali8un83c1hi5?ssl=true';
+const connectionString = process.env.DATABASE_URL || DATABASE_URL
 const pool = new Pool({ connectionString: connectionString })
+
 
 express()
   .use(express.static(path.join(__dirname, 'public/Blue/dist')))
@@ -12,7 +14,11 @@ express()
   .get('/', (req, res) => {
 
     getMenuData(function (result) {
-      getMenuData(function () {
+      getMenuData(function (data) {
+        console.log(data);
+        characters = data.characters;
+        party = data.party
+        games = data.games
         res.render('pages/createCharacter')
       })
     })
@@ -20,7 +26,10 @@ express()
   })
   .get('/createCharacter', (req,res) => {
 
-    getMenuData(function () {
+    getMenuData(function (data) {
+      characters = data.characters;
+      party = data.party
+      games = data.games
       res.render('pages/createCharacter')
     })
       
