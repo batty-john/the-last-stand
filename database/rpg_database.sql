@@ -323,12 +323,22 @@ CREATE TABLE player_characters(
 INSERT INTO player_characters (owner_id, party_id, race, class, major_background, minor_background, name, hair, skin, eyes, height, weight, strength, dexterity, constitution, speed, wit, intelligence, wisdom, charisma, created_by, created_date, last_updated_by, last_updated_date)
 VALUES      (1, 1, 1, 1, 1, 2, 'Thren',     'black',   'dark'   ,   'brown'  , '6.9',  185  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
             (2, 1, 2, 2, 2, 3, 'Dwarfy',    'red',     'grey'   ,   'brown'  , '4.10', 165  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
-            (1, 2, 3, 3, 3, 4,'Wyvrn',      'bald',    'green'  ,   'blue' ,   '5.9',  170 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
-            (2, 2, 4, 4, 4, 5,'Scortch',    'none',    'copper' ,   'red' ,    '7.4' , 280  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
-            (1, 1, 5, 5, 5, 6,'Vaelynth',   'blonde',  'olive'  ,   'green' ,  '5.7' , 125  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
-            (2, 1, 6, 6, 6, 7,'Griffhorn',  'black',   'tan fur',   'brown',   '7.10', 380  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
-            (1, 2, 7, 7, 7, 8,'Lizreal',    'none',    'green'  ,   'yellow' , '6.5',  128 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
-            (2, 2, 8, 8, 8, 1,'Irendrel',   'white',   'white'  ,   'silver',  '4.4' , 85  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE);
+            (1, 2, 3, 3, 3, 4, 'Wyvrn',      'bald',    'green'  ,   'blue' ,   '5.9',  170 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 2, 4, 4, 4, 5, 'Scortch',    'none',    'copper' ,   'red' ,    '7.4' , 280  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (1, 1, 5, 5, 5, 6, 'Vaelynth',   'blonde',  'olive'  ,   'green' ,  '5.7' , 125  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 1, 6, 6, 6, 7, 'Griffhorn',  'black',   'tan fur',   'brown',   '7.10', 380  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (1, 2, 7, 7, 7, 8, 'Lizreal',    'none',    'green'  ,   'yellow' , '6.5',  128 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 2, 8, 8, 8, 1, 'Irendrel',   'white',   'white'  ,   'silver',  '4.4' , 85  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+INSERT INTO player_characters (owner_id, party_id, race, class, major_background, minor_background, name, hair, skin, eyes, height, weight, strength, dexterity, constitution, speed, wit, intelligence, wisdom, charisma, created_by, created_date, last_updated_by, last_updated_date)
+VALUES      (1, 1, 1, 1, 1, 2, 'Dax',     'black',   'dark'   ,   'brown'  , '6.9',  185  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 1, 2, 2, 2, 3, 'Dwarfy',    'red',     'grey'   ,   'brown'  , '4.10', 165  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (1, 2, 3, 3, 3, 4, 'Wyvrn',      'bald',    'green'  ,   'blue' ,   '5.9',  170 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 2, 4, 4, 4, 5, 'Scortch',    'none',    'copper' ,   'red' ,    '7.4' , 280  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (1, 1, 5, 5, 5, 6, 'Vaelynth',   'blonde',  'olive'  ,   'green' ,  '5.7' , 125  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 1, 6, 6, 6, 7, 'Griffhorn',  'black',   'tan fur',   'brown',   '7.10', 380  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (1, 2, 7, 7, 7, 8, 'Lizreal',    'none',    'green'  ,   'yellow' , '6.5',  128 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
+            (2, 2, 8, 8, 8, 1, 'Irendrel',   'white',   'white'  ,   'silver',  '4.4' , 85  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE);
 /* SOME INFO TO INSERT */ 
 
 
@@ -354,3 +364,14 @@ LEFT JOIN (SELECT * FROM user_orders WHERE user_account_id = 3) orders ON m.modu
 WHERE orders.module_id IS NULL;
 
 SELECT name, player_character_id, pc.owner_id, pc.party_id FROM player_characters pc INNER JOIN party_members pm on pc.owner_id = pm.player_id WHERE pc.party_id = 1 AND  pm.party_id = 1;
+
+SELECT name, player_character_id, pc.owner_id, pc.party_id FROM player_characters pc;
+
+/*Select All Player Characters from the current game*/
+SELECT pc.name, p.party_id, owner_id FROM party p INNER JOIN party_members pm on p.party_id = pm.party_id INNER JOIN player_characters pc on pc.owner_id = pm.player_id WHERE p.game_id = 1;
+
+/*Select all Parties that a Player Belongs to*/
+SELECT * from party INNER JOIN party_members on party.party_id = party_members.party_id WHERE party_members.player_id = 1;
+
+/*SELECT all games a player in */
+SELECT u.password, g.game_id, u.user_account_id from user_accounts u INNER JOIN party_members pm on u.user_account_id = pm.player_id INNER JOIN party p on pm.party_id = p.party_id INNER JOIN games g on p.game_id = g.game_id  WHERE email = '" + email + "'";

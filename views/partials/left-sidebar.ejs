@@ -18,7 +18,7 @@
                         <span> Dashboard </span>
                     </a>
                 </li>
-
+<% if (characters) { %>
                 <% if (characters.length === 1) { %>
                     <li>
                         <a href="javascript: void(0);">
@@ -59,6 +59,8 @@
                             </ul>
                         </li>
                         <%} %>
+                <%} %>
+                <% if (party) { %>
 
                         <li>
                             <a href="javascript: void(0);">
@@ -81,7 +83,7 @@
                                 <% }) %>
                             </ul>
                         </li>
-
+                <%} %>
                         
 
                 <li>

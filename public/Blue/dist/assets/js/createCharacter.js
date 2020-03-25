@@ -275,6 +275,7 @@ function createTimelineCard(data, alt) {
     formInput = document.createElement('input');
     formInput.classList.add("hidden-input");
     formInput.setAttribute('type', 'hidden');
+    formInput.setAttribute('name', data.category);
     formInput.value = data.id;
 
     timelineContent = document.createElement('div');
@@ -346,6 +347,7 @@ function submit() {
     errMesseage = "";
 
     if (errMesseage === "") {
+        AJAX('POST', '/submitNewCharacter', )
         document.getElementById("createCharacterForm").submit();
     }
 }

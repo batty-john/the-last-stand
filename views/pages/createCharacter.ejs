@@ -74,7 +74,7 @@
                         </div>     
                         <!-- end page title --> 
                     
-                        <form action="/submitNewCharacter" method="POST" class="row">
+                        <form action="/submitNewCharacter" method="post" class="row">
                             <div class="col-12">
                                 <div class="card-box">
                                     <div class="timeline" id="timeline">
@@ -297,37 +297,37 @@
                                             <h2 class="text-center">Name and Appearance</h2>
                                             <div class="form-group">
                                                 <label for="name">Character Name</label>
-                                                <input type="text" id="name" class="form-control" placeholder="Name">
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col">
                                                     <label for="hair">Hair</label>
-                                                    <input placeholder="Black" type="text" id="hair" class="form-control"> 
+                                                    <input placeholder="Black" type="text" name="hair" id="hair" class="form-control"> 
                                                 </div>
                                                 <div class="col">
                                                     <label for="eyes">Eyes</label>
-                                                    <input placeholder="Blue" type="text" id="eyes" class="form-control"> 
+                                                    <input placeholder="Blue" type="text" name="Eyes" id="eyes" class="form-control"> 
                                                 </div>
                                                 <div class="col">
                                                     <label for="skin">Skin</label>
-                                                    <input placeholder="Pale" type="text" id="skin" class="form-control"> 
+                                                    <input placeholder="Pale" type="text" name="skin" id="skin" class="form-control"> 
                                                 </div>
                                             </div>
 
                                             <label for="height">Height</label>
                                             <div class="form-group row">
                                                 <div class="col">
-                                                    <input placeholder="6'" type="number" id="feet" class="form-control"><label for="feet">feet</label> 
+                                                    <input placeholder="6'" type="number" name="feet" id="feet" class="form-control"><label for="feet">feet</label> 
                                                 </div>
                                                 <div class="col">
-                                                    <input placeholder="9&quot;" type="number" id="inches" class="form-control"><label for="inches">inches</label>
+                                                    <input placeholder="9&quot;" type="number" name="inches" id="inches" class="form-control"><label for="inches">inches</label>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="weight">Weight</label>
-                                                <input type="number" id="weight" class="form-control" placeholder="130"> <label for="weight">lbs</label>
+                                                <input type="number" name="weight" id="weight" class="form-control" placeholder="130"> <label for="weight">lbs</label>
                                             </div>
 
                                             
@@ -335,7 +335,7 @@
                                                <button type="button" id="vanity-form-button" class="btn btn-success float-right">Continue</button>
                                             </div>
                                             <div class="form-group">
-                                                <button id="submit-button" onclick="submit()" class="btn btn-success float-right hidden">Create Character</button>
+                                                <button id="submit-button" onclick="" class="btn btn-success float-right hidden">Create Character</button>
                                              </div>
 
 
