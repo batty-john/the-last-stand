@@ -28,7 +28,7 @@ express()
 }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', getMenuData, (req, res) => {res.render('pages/index', {characters: req.characters, party: req.party, games: req.games, user_details: req.user[0]})})
+  .get('/', getMenuData, (req, res) => {res.render('pages/index', {characters: req.characters, party: req.party, games: req.games, user: req.user[0]})})
   .get('/createCharacter', getMenuData, (req,res) => {res.render('pages/createCharacter', {characters: req.characters, party: req.party, games: req.games, user: req.user[0]})})
   .get('/login', (req,res) => {res.render('pages/login')})
   .post('/login', (req, res) => {
