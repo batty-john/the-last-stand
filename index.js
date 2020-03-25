@@ -89,7 +89,7 @@ express()
            res.render('pages/register', {error: err, username: username, firstname: firstname, lastname: lastname, email: email, password: req.body.password})
          }
          else {
-          res.redirect('pages/login');
+          res.redirect('/login');
          }
          
       })
