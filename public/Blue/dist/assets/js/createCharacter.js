@@ -48,7 +48,7 @@ function getRaces() {
 
             var cardTable = document.createElement('table');
             cardTable.classList.add("race-stat-table");
-            cardTable.innerHTML = '<table class="race-stat-table"><tr><th>Str</th><th>Dex</th><th>Con</th><th>Speed</th><th>Int</th><th>Wis</th><th>Cha</th><th>Wit</th></tr>' + 
+            cardTable.innerHTML = '<table class="race-stat-table"><tr><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Str</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Dex</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Con</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Speed</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Int</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Wis</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Cha</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Wit</th></tr>' + 
             '<tr><td>' + race.strength_cost_adjust + '</td><td>' + race.dexterity_cost_adjust + '</td><td>' + race.constitution_cost_adjust + '</td><td>' + race.speed_cost_adjust + '</td><td>' + race.intelligence_cost_adjust + '</td><td>' + race.wisdom_cost_adjust + '</td><td>' + race.charisma_cost_adjust + '</td><td>' + race.wit_cost_adjust + '</td></tr></table>'
             cardBody.appendChild(cardTable);
 
@@ -269,7 +269,7 @@ function createTimelineCard(data, alt) {
     if(data.character_races_id){
     cardTable = document.createElement('table');
     cardTable.classList.add("race-stat-table");
-    cardTable.innerHTML = '<table class="race-stat-table"><tr><th>Str</th><th>Dex</th><th>Con</th><th>Speed</th><th>Int</th><th>Wis</th><th>Cha</th><th>Wit</th></tr>' + 
+    cardTable.innerHTML = '<table class="tablesaw mb-0" data-tablesaw-mode="stack"><tr><th>Str</th><th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Dex</th><th>Con</th><th>Speed</th><th>Int</th><th>Wis</th><th>Cha</th><th>Wit</th></tr>' + 
     '<tr><td>' + data.strength_cost_adjust + '</td><td>' + data.dexterity_cost_adjust + '</td><td>' + data.constitution_cost_adjust + '</td><td>' + data.speed_cost_adjust + '</td><td>' + data.intelligence_cost_adjust + '</td><td>' + data.wisdom_cost_adjust + '</td><td>' + data.charisma_cost_adjust + '</td><td>' + data.wit_cost_adjust + '</td></tr></table>'
     }
     formInput = document.createElement('input');

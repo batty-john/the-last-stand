@@ -455,6 +455,112 @@
                             </div>
                         </div>     
                         <!-- end page title --> 
+
+                        <div class="card-box">
+                            <h4 class="header-title mb-4">Default Tabs</h4>
+
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                                        Character Details
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                        Stats and Skills
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a href="#messages" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                        Messages
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                        Settings
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="home">
+                                    <table class="tablesaw mb-0" data-tablesaw-mode="stack">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Stat</th>
+                                            <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col data-tablesaw-priority="3">Current</th>
+                                            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">Temp</th>
+                                            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">Max</th>
+                                           
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Strength</td>
+                                            <td><%= characters[0].strength %></td>
+                                            <td><%= characters[0].strength %></td>
+                                            <td><%= characters[0].strength %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dexterity</td>
+                                            <td><%= characters[0].dexterity %></td>
+                                            <td><%= characters[0].dexterity %></td>
+                                            <td><%= characters[0].dexterity %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Constitution</td>
+                                            <td><%= characters[0].constitution %></td>
+                                            <td><%= characters[0].constitution %></td>
+                                            <td><%= characters[0].constitution %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Speed</td>
+                                            <td><%= characters[0].speed %></td>
+                                            <td><%= characters[0].speed %></td>
+                                            <td><%= characters[0].speed %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Intelligence</td>
+                                            <td><%= characters[0].intelligence %></td>
+                                            <td><%= characters[0].intelligence %></td>
+                                            <td><%= characters[0].intelligence %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wisdom</td>
+                                            <td><%= characters[0].wisdom %></td>
+                                            <td><%= characters[0].wisdom %></td>
+                                            <td><%= characters[0].wisdom %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Charisma</td>
+                                            <td><%= characters[0].charisma %></td>
+                                            <td><%= characters[0].charisma %></td>
+                                            <td><%= characters[0].charisma %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wit</td>
+                                            <td><%= characters[0].wit %></td>
+                                            <td><%= characters[0].wit %></td>
+                                            <td><%= characters[0].wit %></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>    
+                                </div>
+                                <div class="tab-pane show active" id="profile">
+                                    <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+                                </div>
+                                <div class="tab-pane" id="messages">
+                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+                                    <p class="mb-0">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                                </div>
+                                <div class="tab-pane" id="settings">
+                                    <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         
                     </div> <!-- end container-fluid -->
 

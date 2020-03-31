@@ -28,8 +28,9 @@ express()
 }))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', getMenuData, (req, res) => {res.render('pages/index', {characters: req.characters, party: req.party, games: req.games, user: req.user[0]})})
-  .get('/createCharacter', getMenuData, (req,res) => {res.render('pages/createCharacter', {characters: req.characters, party: req.party, games: req.games, user: req.user[0]})})
+  .get('/', getMenuData, (req, res) => {res.render('pages/index', {characters: req.characters, party: req.party, games: req.games, user: req.user[0], session: req.session})})
+  .get('/createCharacter', getMenuData, (req,res) => {res.render('pages/createCharacter', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session})})
+  .get('/character', getMenuData, (req, res) => {res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session} )})
   .get('/login', (req,res) => {res.render('pages/login')})
   .post('/login', (req, res) => {
 
@@ -205,7 +206,9 @@ express()
 
   function getMenuData(req, res, next) {
 
-    
+    if (req.query.game) {
+      req.session.game_id = Number(req.query.game);
+    }
 
     if(req.session.user_id && req.session.game_id) {
 
