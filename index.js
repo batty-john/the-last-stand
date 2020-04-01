@@ -70,7 +70,7 @@ express()
     var password = req.body.password;
 
 
-    let sql = "SELECT * from user_accounts WHERE email = '" + email + "'";
+    let sql = "SELECT user_account_id, password, game_id from user_accounts u INNER JOIN party_members pm ON u.user_account_id = pm.player_id INNER JOIN party p ON p.party_id = pm.party_id WHERE email = '" + email + "'";
 
     sqlQuery(sql, function (err, response){
 
@@ -78,13 +78,13 @@ express()
           console.error(err);
       }
       
-      if(response.length === 1) {
+      if(response.length >= 1) {
             
             bcrypt.compare(password, response[0].password, function(err, result) {
                 if(result) {
                     
                     req.session.user_id = response[0].user_account_id;
-                    req.session.game_id = 1;
+                    req.session.game_id = response[0].game_id;
                     if (req.session.redirect) {
                       console.log("Redirecting to: " + req.session.redirect)
                       res.redirect(req.session.redirect)
@@ -304,7 +304,7 @@ express()
     if(req.session.user_id && req.session.game_id) {
 
       var completed = 0;
-      let sql = "Select * FROM player_characters WHERE game_id = " + req.session.game_id + " AND owner_id <> " + req.session.user_id;
+      let sql = "SELECT * FROM player_characters WHERE game_id = " + req.session.game_id + " AND owner_id <> " + req.session.user_id;
 
       sqlQuery(sql, function(err, result) {
         

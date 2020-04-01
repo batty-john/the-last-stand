@@ -15,6 +15,15 @@
         <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
+        <style>
+
+            #game-card-wrapper .wrap-card {
+                flex-basis: 30%;
+                max-width:35%;
+                margin-bottom: 15px;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -55,11 +64,11 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4 class="my-4">Games</h4>
-                                <div class="card-deck-wrapper">
+                                <div class="card-deck-wrapper" id="game-card-wrapper" style="flex-wrap: wrap;">
                                     <div class="card-deck">
                                         <% games.forEach(function(game){ %>
                                         
-                                        <div class="card">
+                                        <div class="card wrap-card">
                                             <a href='/?game=<%=game.game_id %>' style="color:black;">
                                             <img class="card-img-top img-fluid" src="assets/images/games/<%=game.image %>" alt="Card image cap">
                                             <div class="card-body">
@@ -77,7 +86,7 @@
                                     
                                         <% }) %>
 
-                                        <div class="card" style="max-width: 500px;">
+                                        <div class="card wrap-card" style="max-width: 500px;">
                                             <a href='/createGame' style="color:black;">
                                             <img class="card-img-top img-fluid" src="assets/images/games/new.jpg" alt="Card image cap">
                                             <div class="card-body">
@@ -86,7 +95,7 @@
                                             </a>
                                         </div>
 
-                                        <div class="card" style="max-width: 500px;">
+                                        <div class="card wrap-card" style="max-width: 500px;">
                                             <a href='/joinGame' style="color:black;">
                                             <img class="card-img-top img-fluid" src="assets/images/games/join.jpg" alt="Card image cap">
                                             <div class="card-body">

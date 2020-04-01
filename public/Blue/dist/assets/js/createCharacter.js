@@ -347,7 +347,6 @@ function submit() {
     errMesseage = "";
 
     if (errMesseage === "") {
-        AJAX('POST', '/submitNewCharacter', )
         document.getElementById("createCharacterForm").submit();
     }
 }
