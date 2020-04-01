@@ -82,9 +82,19 @@ express()
             
             bcrypt.compare(password, response[0].password, function(err, result) {
                 if(result) {
-                    
-                    req.session.user_id = response[0].user_account_id;
+
+                  console.log(response[0].game_id);
+                  if(response[0].game_id == null) {
+                    console.log('In if')
+                    req.session.game_id = 0;
+                  }
+                  else {
+                    console.log("in else")
                     req.session.game_id = response[0].game_id;
+                  }
+
+                    req.session.user_id = response[0].user_account_id;
+                    
                     if (req.session.redirect) {
                       console.log("Redirecting to: " + req.session.redirect)
                       res.redirect(req.session.redirect)
