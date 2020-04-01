@@ -15,6 +15,20 @@
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
+        <style>
+
+            .form-control {
+                font-weight: bolder;
+                color: black;
+            }
+
+            label {
+                
+                font-weight: 500;
+            }
+
+        </style>
+
     </head>
 
     <body>
@@ -84,7 +98,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane" id="home">
-                                    <table class="tablesaw mb-0" data-tablesaw-mode="stack">
+                                    <table class="tablesaw mb-0" data-tablesaw-mode="stack" style="display: inline-block;">
                                         <thead>
                                         <tr>
                                             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Stat</th>
@@ -97,57 +111,57 @@
                                         <tbody>
                                         <tr>
                                             <td>Strength</td>
-                                            <td><%= characters[0].strength %></td>
-                                            <td><%= characters[0].temp_strength %></td>
-                                            <td><%= characters[0].max_strength %></td>
+                                            <td><%= displayCharacter.strength %></td>
+                                            <td><%= displayCharacter.temp_strength %></td>
+                                            <td><%= displayCharacter.max_strength %></td>
                                         </tr>
                                         <tr>
                                             <td>Dexterity</td>
-                                            <td><%= characters[0].dexterity %></td>
-                                            <td><%= characters[0].temp_dexterity %></td>
-                                            <td><%= characters[0].max_dexterity %></td>
+                                            <td><%= displayCharacter.dexterity %></td>
+                                            <td><%= displayCharacter.temp_dexterity %></td>
+                                            <td><%= displayCharacter.max_dexterity %></td>
                                         </tr>
                                         <tr>
                                             <td>Constitution</td>
-                                            <td><%= characters[0].constitution %></td>
-                                            <td><%= characters[0].temp_constitution %></td>
-                                            <td><%= characters[0].max_constitution %></td>
+                                            <td><%= displayCharacter.constitution %></td>
+                                            <td><%= displayCharacter.temp_constitution %></td>
+                                            <td><%= displayCharacter.max_constitution %></td>
                                         </tr>
                                         <tr>
                                             <td>Speed</td>
-                                            <td><%= characters[0].speed %></td>
-                                            <td><%= characters[0].temp_speed %></td>
-                                            <td><%= characters[0].max_speed %></td>
+                                            <td><%= displayCharacter.speed %></td>
+                                            <td><%= displayCharacter.temp_speed %></td>
+                                            <td><%= displayCharacter.max_speed %></td>
                                         </tr>
                                         <tr>
                                             <td>Intelligence</td>
-                                            <td><%= characters[0].intelligence %></td>
-                                            <td><%= characters[0].temp_intelligence %></td>
-                                            <td><%= characters[0].max_intelligence %></td>
+                                            <td><%= displayCharacter.intelligence %></td>
+                                            <td><%= displayCharacter.temp_intelligence %></td>
+                                            <td><%= displayCharacter.max_intelligence %></td>
                                         </tr>
                                         <tr>
                                             <td>Wisdom</td>
-                                            <td><%= characters[0].wisdom %></td>
-                                            <td><%= characters[0].temp_wisdom %></td>
-                                            <td><%= characters[0].max_wisdom %></td>
+                                            <td><%= displayCharacter.wisdom %></td>
+                                            <td><%= displayCharacter.temp_wisdom %></td>
+                                            <td><%= displayCharacter.max_wisdom %></td>
                                         </tr>
                                         <tr>
                                             <td>Charisma</td>
-                                            <td><%= characters[0].charisma %></td>
-                                            <td><%= characters[0].temp_charisma %></td>
-                                            <td><%= characters[0].max_charisma %></td>
+                                            <td><%= displayCharacter.charisma %></td>
+                                            <td><%= displayCharacter.temp_charisma %></td>
+                                            <td><%= displayCharacter.max_charisma %></td>
                                         </tr>
                                         <tr>
                                             <td>Wit</td>
-                                            <td><%= characters[0].wit %></td>
-                                            <td><%= characters[0].temp_wit %></td>
-                                            <td><%= characters[0].max_wit %></td>
+                                            <td><%= displayCharacter.wit %></td>
+                                            <td><%= displayCharacter.temp_wit %></td>
+                                            <td><%= displayCharacter.max_wit %></td>
                                         </tr>
                                       </tbody>
                                     </table>
                                     
                                     
-                                    <table class="tablesaw mb-0" data-tablesaw-mode="stack" style="float: left;">
+                                    <table class="tablesaw mb-0" data-tablesaw-mode="stack" style="display: inline-block;">
                                         <thead>
                                         <tr>
                                             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Skill</th>
@@ -160,95 +174,152 @@
                                         <tbody>
                                         <tr>
                                             <td>Melee Weapons</td>
-                                            <td><%= characters[0].melee_skill %></td>
+                                            <td><%= displayCharacter.melee_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].melee_skill %></td>
+                                            <td><%= displayCharacter.melee_skill %></td>
                                             
                                         </tr>
                                         <tr>
                                             <td>Ranged Weapons</td>
-                                            <td><%= characters[0].ranged_skill %></td>
+                                            <td><%= displayCharacter.ranged_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].ranged_skill %></td>
+                                            <td><%= displayCharacter.ranged_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Martial</td>
-                                            <td><%= characters[0].martial_skill %></td>
+                                            <td><%= displayCharacter.martial_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].martial_skill %></td>
+                                            <td><%= displayCharacter.martial_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Arcane</td>
-                                            <td><%= characters[0].arcane_skill %></td>
+                                            <td><%= displayCharacter.arcane_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].arcane_skill %></td>
+                                            <td><%= displayCharacter.arcane_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Nature</td>
-                                            <td><%= characters[0].nature_skill %></td>
+                                            <td><%= displayCharacter.nature_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].nature_skill %></td>
+                                            <td><%= displayCharacter.nature_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Religion</td>
-                                            <td><%= characters[0].religion_skill %></td>
+                                            <td><%= displayCharacter.religion_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].religion_skill %></td>
+                                            <td><%= displayCharacter.religion_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Scholastics</td>
-                                            <td><%= characters[0].scholastics_skill %></td>
+                                            <td><%= displayCharacter.scholastics_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].scholastics_skill %></td>
+                                            <td><%= displayCharacter.scholastics_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Social</td>
-                                            <td><%= characters[0].social_skill %></td>
+                                            <td><%= displayCharacter.social_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].social_skill %></td>
+                                            <td><%= displayCharacter.social_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Athletics</td>
-                                            <td><%= characters[0].melee_skill %></td>
+                                            <td><%= displayCharacter.athletics_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].melee_skill %></td>
+                                            <td><%= displayCharacter.athletics_skill %></td>
                                             
                                         </tr>
                                         <tr>
                                             <td>Crafstmanship</td>
-                                            <td><%= characters[0].crafstmanship_skill %></td>
+                                            <td><%= displayCharacter.craftsmanship_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].crafstmanship_skill %></td>
+                                            <td><%= displayCharacter.craftsmanship_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Medicine</td>
-                                            <td><%= characters[0].medicine_skill %></td>
+                                            <td><%= displayCharacter.medicine_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].medicine_skill %></td>
+                                            <td><%= displayCharacter.medicine_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Perception</td>
-                                            <td><%= characters[0].perception_skill %></td>
+                                            <td><%= displayCharacter.perception_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].perception_skill %></td>
+                                            <td><%= displayCharacter.perception_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Larceny</td>
-                                            <td><%= characters[0].larceny_skill %></td>
+                                            <td><%= displayCharacter.larceny_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].larceny_skill %></td>
+                                            <td><%= displayCharacter.larceny_skill %></td>
                                         </tr>
                                         <tr>
                                             <td>Survival</td>
-                                            <td><%= characters[0].survival_skill %></td>
+                                            <td><%= displayCharacter.survival_skill %></td>
                                             <td>0</td>
-                                            <td><%= characters[0].survival_skill %></td>
+                                            <td><%= displayCharacter.survival_skill %></td>
                                         </tr>
                                       </tbody>
                                     </table>   
                                 </div>
-                                <div class="tab-pane show active" id="profile">
+                                <div class="tab-pane show active" id="profile" >
                                     <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+                                    
+                                    <div>
+                                        <div id="vanity">
+
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <label for="hair">Race</label>
+                                                    <input placeholder="Black" type="text" name="hair" id="hair" class="form-control" value="<%=displayCharacter.race%>" readonly/> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="eyes">Class</label>
+                                                    <input placeholder="Blue" type="text" name="Eyes" id="eyes" class="form-control" value="<%=displayCharacter.class%>" readonly/> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="skin">Major Background</label>
+                                                    <input placeholder="Pale" type="text" name="skin" id="skin" class="form-control" value="<%=displayCharacter.major_background%>" readonly/> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="skin">Minor Background</label>
+                                                    <input placeholder="Pale" type="text" name="skin" id="skin" class="form-control" value="<%=displayCharacter.minor_background%>" readonly/> 
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Character Name</label>
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="<%=displayCharacter.name%>" style="font-weight: bolder;">
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <label for="hair">Hair</label>
+                                                    <input placeholder="Black" type="text" name="hair" id="hair" class="form-control" value="<%=displayCharacter.hair%>"> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="eyes">Eyes</label>
+                                                    <input placeholder="Blue" type="text" name="Eyes" id="eyes" class="form-control" value="<%=displayCharacter.eyes%>"> 
+                                                </div>
+                                                <div class="col">
+                                                    <label for="skin">Skin</label>
+                                                    <input placeholder="Pale" type="text" name="skin" id="skin" class="form-control" value="<%=displayCharacter.skin%>"> 
+                                                </div>
+                                            </div>
+
+                                            <label for="height">Height</label>
+                                            <div class="form-group row">
+                                                <div class="col">
+                                                    <input placeholder="6'" type="text" name="feet" id="feet" class="form-control" value="<%=displayCharacter.height%>"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="weight">Weight</label>
+                                                <input type="number" name="weight" id="weight" class="form-control" placeholder="130" value="<%=displayCharacter.weight%>"> <label for="weight">lbs</label>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
                                     <p class="mb-0">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
                                 </div>
                                 <div class="tab-pane" id="messages">

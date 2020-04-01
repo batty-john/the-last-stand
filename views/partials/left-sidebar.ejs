@@ -49,7 +49,7 @@
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <ul class="nav-third-level nav" aria-expanded="false">
-                                        <li><a href="/character">Overview</a></li>
+                                        <li><a href="/character?id=<%=character.player_character_id%>">Overview</a></li>
                                         <li><a href="#">Spells</a></li>
                                         <li><a href="#">Abilities</a></li>
                                         <li><a href="#">Train</a></li>
@@ -61,7 +61,7 @@
                         </li>
                         <%} %>
                 <%} %>
-                <% if (party.length > 1 && session.game_id) { %>
+                <% if (party && session.game_id) { %>
 
                         <li>
                             <a href="javascript: void(0);">
@@ -76,7 +76,7 @@
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <ul class="nav-third-level nav" aria-expanded="false">
-                                        <li><a href="#">Overview</a></li>
+                                        <li><a href="/character?id=<%=character.player_character_id%>">Overview</a></li>
                                         <li><a href="#">Spells</a></li>
                                         <li><a href="#">Abilities</a></li>
                                     </ul>

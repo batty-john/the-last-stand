@@ -37,14 +37,32 @@ express()
       sql = "INSERT INTO party_members (party_id, player_id, created_by, created_date, last_updated_by, last_updated_date) VALUES (" + req.query.party + ",  1, 1, CURRENT_DATE, 1, CURRENT_DATE)";
     }
     if(req.query.g && !req.query.p) {
-      sql = "select g.game_id, p.party_id from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE g.invite_link = " + req.query.g;
+      sql = "select g.game_id, p.party_id from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE g.invite_link = '" + req.query.g + "'";
       sqlQuery(sql, function (err, result) {
-        sql = "INSERT INTO party_members (party_id, player_id, created_by, created_date, last_updated_by, last_updated_date) VALUES (" + result.party_id + ",  " + req.session.player_id + ", 1, CURRENT_DATE, 1, CURRENT_DATE)"
+        sql = "INSERT INTO party_members (party_id, player_id, created_by, created_date, last_updated_by, last_updated_date) VALUES (" + result[0].party_id + ",  " + req.session.user_id + ", 1, CURRENT_DATE, 1, CURRENT_DATE)"
+        sqlQuery(sql, function(err,innerResult) { 
+          req.session.game_id = result[0].game_id;
+          req.session.party_id = result[0].party_id;
+          res.redirect('/');
+        })
       })
     }
 
   })
-  .get('/character', getMenuData, (req, res) => {res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session} )})
+  .get('/character', getMenuData, (req, res) => {
+    
+    if(req.query.id) {
+      sqlQuery("SELECT * FROM player_characters WHERE player_character_id = " + req.query.id, function (request, result) {
+        displayCharacter = result[0];
+        res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter})
+      })
+    }
+    else {
+      displayCharacter = req.characters[0];
+      res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter})
+    }
+
+  })
   .get('/login', (req,res) => {res.render('pages/login')})
   .post('/login', (req, res) => {
 
@@ -68,6 +86,7 @@ express()
                     req.session.user_id = response[0].user_account_id;
                     req.session.game_id = 1;
                     if (req.session.redirect) {
+                      console.log("Redirecting to: " + req.session.redirect)
                       res.redirect(req.session.redirect)
                     } else {
                       res.redirect('/')
@@ -285,7 +304,7 @@ express()
     if(req.session.user_id && req.session.game_id) {
 
       var completed = 0;
-      let sql = "Select * FROM player_characters WHERE game_id = " + req.session.game_id + "AND owner_id <> " + req.session.user_id;
+      let sql = "Select * FROM player_characters WHERE game_id = " + req.session.game_id + " AND owner_id <> " + req.session.user_id;
 
       sqlQuery(sql, function(err, result) {
         
