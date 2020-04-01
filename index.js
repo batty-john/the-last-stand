@@ -70,7 +70,7 @@ express()
     var password = req.body.password;
 
 
-    let sql = "SELECT user_account_id, password, game_id from user_accounts u INNER JOIN party_members pm ON u.user_account_id = pm.player_id INNER JOIN party p ON p.party_id = pm.party_id WHERE email = '" + email + "'";
+    let sql = "SELECT user_account_id, password, game_id from user_accounts u LEFT OUTER JOIN party_members pm ON u.user_account_id = pm.player_id LEFT OUTER JOIN party p ON p.party_id = pm.party_id WHERE email = '" + email + "'";
 
     sqlQuery(sql, function (err, response){
 
