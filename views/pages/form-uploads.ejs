@@ -10,6 +10,9 @@
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
+         <!-- Plugins css -->
+         <link href="assets/libs/dropzone/dropzone.min.css" rel="stylesheet" type="text/css" />
+
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -447,123 +450,109 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Abstack</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                                            <li class="breadcrumb-item active">Form Wizard</li>
+                                            <li class="breadcrumb-item active">File Uploads</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Form Wizard</h4>
+                                    <h4 class="page-title">File Uploads</h4>
                                 </div>
                             </div>
                         </div>     
                         <!-- end page title --> 
 
-                          <!-- Basic Form Wizard -->
-                          <div class="row">
-                                <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-12">
                                     <div class="card-box">
-                                        <h4 class="header-title"><b>Basic Form Wizard</b></h4>
+
+                                        <h4 class="header-title"><b>Create a New Game</b></h4>
+                                    <p class="sub-header">
+                                        Use the form below to create a new game.
+                                    </p>
+
+                                    <form id="basic-form" action="#">
+                                        <div>
+                                            <h3>Basic Info</h3>
+                                            <section>
+                                                <div class="form-group clearfix">
+                                                    <label class="control-label " for="gameName">Game Title</label>
+                                                    <div class="">
+                                                        <input class="form-control required" id="userName" name="gameName" type="text">
+                                                    </div>
+                                                </div>
+
+                                                <h4 class="header-title">Game Card Image</h4>
+                                                    <p class="sub-header">
+                                                        Upload an image so you're friends will recognize your game from their menus.
+                                                    </p>
+                                                    <form action="/" method="post" class="dropzone" id="myAwesomeDropzone">
+                                                        <div class="fallback">
+                                                            <input name="file" type="file" multiple />
+                                                        </div>
+                        
+                                                        <div class="dz-message needsclick">
+                                                            <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                            <h3>Drop files here or click to upload.</h3>
+                                                            <span class="text-muted font-13">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                                                        </div>
+                                                    </form>
+            
+                                            
+                                        
+                                        
+
+                                            </section>
+                                            <h3>Modules</h3>
+                                            <section>
+                                                <h4>In the future, you'll be able to select which modules will be active for your game. As for now, everything is enabled and everything is unlocked free of charge!</h4>
+                                            </section>
+                                            <h3>Invite Friends</h3>
+                                            <section>
+                                                <div class="form-group clearfix">
+                                                    <div class="col-lg-12">
+                                                        <ul class="list-unstyled w-list">
+                                                            <li><b>Game Name:</b> <span id="gameNameConfirm" >Game Name Goes Here</span> </li>
+                                                            <li><b>Invite Link:</b> <span id="inviteLink"> https://https://last-stand-character-sheet.herokuapp.com/ </span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <h3>Finish</h3>
+                                            <section>
+                                                <div class="form-group clearfix">
+                                                    <div class="col-lg-12">
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-h" type="checkbox">
+                                                            <label for="checkbox-h">
+                                                                I agree with the Terms and Conditions.
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </form>
+                                        <h4 class="header-title">Dropzone File Upload</h4>
                                         <p class="sub-header">
-                                            Use the button classes on an <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code>, or <code>&lt;input&gt;</code> element.
+                                            DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews.
                                         </p>
-    
-                                        <form id="basic-form" action="#">
-                                            <div>
-                                                <h3>Account</h3>
-                                                <section>
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label " for="userName">User name *</label>
-                                                        <div class="">
-                                                            <input class="form-control required" id="userName" name="userName" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label " for="password"> Password *</label>
-                                                        <div class="">
-                                                            <input id="password" name="password" type="text" class="required form-control">
-    
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label " for="confirm">Confirm Password *</label>
-                                                        <div class="">
-                                                            <input id="confirm" name="confirm" type="text" class="required form-control">
-                                                        </div>
-                                                    </div>
-    
-                                                </section>
-                                                <h3>Profile</h3>
-                                                <section>
-                                                    <div class="form-group clearfix">
-    
-                                                        <label class="control-label" for="name"> First name *</label>
-                                                        <div class="">
-                                                            <input id="name" name="name" type="text" class="required form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label " for="surname"> Last name *</label>
-                                                        <div class="">
-                                                            <input id="surname" name="surname" type="text" class="required form-control">
-    
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label " for="email">Email *</label>
-                                                        <div class="">
-                                                            <input id="email" name="email" type="text" class="required email form-control">
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label " for="address">Address *</label>
-                                                        <div class="">
-                                                            <input id="address" name="address" type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-    
-                                                    <div class="form-group clearfix">
-                                                        <label class="control-label ">(*) Mandatory</label>
-                                                    </div>
-    
-                                                </section>
-                                                <h3>Hints</h3>
-                                                <section>
-                                                    <div class="form-group clearfix">
-                                                        <div class="col-lg-12">
-                                                            <ul class="list-unstyled w-list">
-                                                                <li><b>First Name :</b> Jonathan </li>
-                                                                <li><b>Last Name :</b> Smith </li>
-                                                                <li><b>Emial:</b> jonathan@smith.com</li>
-                                                                <li><b>Address:</b> 123 Your City, Cityname. </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                                <h3>Finish</h3>
-                                                <section>
-                                                    <div class="form-group clearfix">
-                                                        <div class="col-lg-12">
-                                                            <div class="checkbox checkbox-primary">
-                                                                <input id="checkbox-h" type="checkbox">
-                                                                <label for="checkbox-h">
-                                                                    I agree with the Terms and Conditions.
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </section>
+            
+                                        <form action="/" method="post" class="dropzone" id="myAwesomeDropzone">
+                                            <div class="fallback">
+                                                <input name="file" type="file" multiple />
+                                            </div>
+            
+                                            <div class="dz-message needsclick">
+                                                <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                <h3>Drop files here or click to upload.</h3>
+                                                <span class="text-muted font-13">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
                                             </div>
                                         </form>
-    
-                                    </div>
-                                </div>
+                                        <div class="clearfix text-right mt-3">
+                                            <button type="button" class="btn btn-danger"> <i class="mdi mdi-send mr-1"></i> Submit</button>
+                                        </div>
+                                    </div> <!-- end card-box -->
+                                </div> <!-- end col-->
                             </div>
-    
-                            <!-- End row -->
-    
-    
-                            
+                            <!-- end row -->  
     
                         
                     </div> <!-- end container-fluid -->
@@ -683,14 +672,15 @@
         <!-- Vendor js -->
         <script src="assets/js/vendor.min.js"></script>
 
-        <!--Form Wizard-->
-        <script src="assets/libs/jquery-steps/jquery.steps.min.js"></script>
-
-        <!-- Validation init js-->
-        <script src="assets/js/pages/wizard-init.js"></script>
-
         <!-- Plugins js -->
         <script src="assets/libs/dropzone/dropzone.min.js"></script>
+
+         <!--Form Wizard-->
+         <script src="assets/libs/jquery-steps/jquery.steps.min.js"></script>
+
+         <!-- Validation init js-->
+         <script src="assets/js/pages/wizard-init.js"></script>
+
 
         <!-- App js -->
         <script src="assets/js/app.min.js"></script>

@@ -25,10 +25,12 @@ CREATE TABLE user_accounts (
     last_updated_date DATE
 );
 
+/*
 INSERT INTO user_accounts (username,    password,               email,                   first_name, last_name, created_by, created_date, last_updated_by, last_updated_date) 
 VALUES                    ('admin',     'badSecurityPractice' , 'login@johnbatty.me' ,  'John',     'Batty',    1,          CURRENT_DATE, 1,              CURRENT_DATE ),
                           ('9fingers',  'weakpassword',         'dawson5252@gmail.com', 'Dawson',   'Norton',   1,          CURRENT_DATE, 1,              CURRENT_DATE ),
                           ('LoogLoogas','strongpassword',       'luke@ducimus.digital', 'Luke',     'Batty',    1,          CURRENT_DATE, 1,              CURRENT_DATE );
+*/
 
 CREATE TABLE modules (
     module_id      SERIAL        CONSTRAINT modules_pk PRIMARY KEY   NOT NULL,
@@ -247,6 +249,8 @@ CREATE TABLE games (
     game_id SERIAL CONSTRAINT games_pk PRIMARY KEY,
     owner_id INTEGER CONSTRAINT games_fk1 REFERENCES user_accounts(user_account_id),
     name                VARCHAR(30) NOT NULL,
+    image               VARCHAR DEFAULT 'DEFAULT',
+    invite_link         VARCHAR(30),
     created_by  INTEGER     NOT NULL,
     created_date DATE       NOT NULL,
     last_updated_by INTEGER NOT NULL,
@@ -291,35 +295,80 @@ VALUES      (1,  1, 1, CURRENT_DATE, 1, CURRENT_DATE),
             (1,  2, 1, CURRENT_DATE, 1, CURRENT_DATE),
             (1,  3, 1, CURRENT_DATE, 1, CURRENT_DATE);
 
+/*Player Characters Table*/
 
 CREATE TABLE player_characters(
     player_character_id         SERIAL      NOT NULL   CONSTRAINT player_character_pk PRIMARY KEY,
     owner_id                    INTEGER     NOT NULL   CONSTRAINT player_character_fk1 REFERENCES user_accounts(user_account_id),
     party_id                    INTEGER     NOT NULL   CONSTRAINT player_character_fk2 REFERENCES party(party_id),
-    race                        INTEGER     NOT NULL   CONSTRAINT player_character_fk3 REFERENCES character_races(character_races_id),
-    class                       INTEGER     NOT NULL   CONSTRAINT player_character_fk4 REFERENCES character_classes(character_classes_id),
-    major_background            INTEGER     NOT NULL   CONSTRAINT player_character_fk5 REFERENCES character_backgrounds(character_backgrounds_id),
-    minor_background            INTEGER     NOT NULL   CONSTRAINT player_character_fk6 REFERENCES character_backgrounds(character_backgrounds_id),
+    game_id                     INTEGER     NOT NULL   CONSTRAINT player_character_fk3 REFERENCES games(game_id),
+    race                        INTEGER     NOT NULL   CONSTRAINT player_character_fk4 REFERENCES character_races(character_races_id),
+    class                       INTEGER     NOT NULL   CONSTRAINT player_character_fk5 REFERENCES character_classes(character_classes_id),
+    major_background            INTEGER     NOT NULL   CONSTRAINT player_character_fk6 REFERENCES character_backgrounds(character_backgrounds_id),
+    minor_background            INTEGER     NOT NULL   CONSTRAINT player_character_fk7 REFERENCES character_backgrounds(character_backgrounds_id),
     name                        VARCHAR(30) NOT NULL,
     hair                        VARCHAR(30),
     skin                        VARCHAR(30),
     eyes                        VARCHAR(30),
-    height                      VARCHAR(30) NOT NULL,
+    height                      VARCHAR(6)  NOT NULL,
     weight                      INTEGER     NOT NULL,
-    strength                    INTEGER,
-    dexterity                   INTEGER,
-    constitution                INTEGER,
-    speed                       INTEGER,
-    wit                         INTEGER,
-    intelligence                INTEGER,
-    wisdom                      INTEGER,
-    charisma                    INTEGER,
+    strength                    INTEGER     DEFAULT 0,
+    dexterity                   INTEGER     DEFAULT 0,
+    constitution                INTEGER     DEFAULT 0,
+    speed                       INTEGER     DEFAULT 0,
+    wit                         INTEGER     DEFAULT 0,
+    intelligence                INTEGER     DEFAULT 0,
+    wisdom                      INTEGER     DEFAULT 0,
+    charisma                    INTEGER     DEFAULT 0,
+    max_strength                INTEGER     DEFAULT 0,
+    max_dexterity               INTEGER     DEFAULT 0,
+    max_constitution            INTEGER     DEFAULT 0,
+    max_speed                   INTEGER     DEFAULT 0,
+    max_wit                     INTEGER     DEFAULT 0,
+    max_intelligence            INTEGER     DEFAULT 0,
+    max_wisdom                  INTEGER     DEFAULT 0,
+    max_charisma                INTEGER     DEFAULT 0,
+    temp_strength               INTEGER     DEFAULT 0,
+    temp_dexterity              INTEGER     DEFAULT 0,
+    temp_constitution           INTEGER     DEFAULT 0,
+    temp_speed                  INTEGER     DEFAULT 0,
+    temp_wit                    INTEGER     DEFAULT 0,
+    temp_intelligence           INTEGER     DEFAULT 0,
+    temp_wisdom                 INTEGER     DEFAULT 0,
+    temp_charisma               INTEGER     DEFAULT 0,
+    melee_skill                 INTEGER     DEFAULT 0,
+    ranged_skill                INTEGER     DEFAULT 0,
+    martial_skill               INTEGER     DEFAULT 0,
+    arcane_skill                INTEGER     DEFAULT 0,
+    nature_skill                INTEGER     DEFAULT 0,
+    religion_skill              INTEGER     DEFAULT 0,   
+    scholastics_skill           INTEGER     DEFAULT 0,    
+    social_skill                INTEGER     DEFAULT 0,
+    athletics_skill             INTEGER     DEFAULT 0,    
+    craftsmanship_skill         INTEGER     DEFAULT 0,      
+    medicine_skill              INTEGER     DEFAULT 0,  
+    perception_skill            INTEGER     DEFAULT 0,  
+    larceny_skill               INTEGER     DEFAULT 0,
+    survival_skill              INTEGER     DEFAULT 0,
+    health_level                INTEGER     DEFAULT 1,
+    max_health                  INTEGER     DEFAULT 20,
+    current_health              INTEGER     DEFAULT 20, 
     created_by                  INTEGER,
     created_date                DATE,
     last_updated_by             INTEGER,
     last_updated_date           DATE
 );
 
+CREATE TABLE character_abilities (
+    player_character_id         SERIAL      NOT NULL   CONSTRAINT character_abilities_pk PRIMARY KEY,
+    
+    created_by                  INTEGER,
+    created_date                DATE,
+    last_updated_by             INTEGER,
+    last_updated_date           DATE
+);
+
+/*
 INSERT INTO player_characters (owner_id, party_id, race, class, major_background, minor_background, name, hair, skin, eyes, height, weight, strength, dexterity, constitution, speed, wit, intelligence, wisdom, charisma, created_by, created_date, last_updated_by, last_updated_date)
 VALUES      (1, 1, 1, 1, 1, 2, 'Thren',     'black',   'dark'   ,   'brown'  , '6.9',  185  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
             (2, 1, 2, 2, 2, 3, 'Dwarfy',    'red',     'grey'   ,   'brown'  , '4.10', 165  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
@@ -339,6 +388,7 @@ VALUES      (1, 1, 1, 1, 1, 2, 'Dax',     'black',   'dark'   ,   'brown'  , '6.
             (2, 1, 6, 6, 6, 7, 'Griffhorn',  'black',   'tan fur',   'brown',   '7.10', 380  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
             (1, 2, 7, 7, 7, 8, 'Lizreal',    'none',    'green'  ,   'yellow' , '6.5',  128 ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE),
             (2, 2, 8, 8, 8, 1, 'Irendrel',   'white',   'white'  ,   'silver',  '4.4' , 85  ,    10, 10, 10, 10, 10, 10, 10, 10, 1, CURRENT_DATE, 1, CURRENT_DATE);
+
 /* SOME INFO TO INSERT */ 
 
 
@@ -373,5 +423,12 @@ SELECT pc.name, p.party_id, owner_id FROM party p INNER JOIN party_members pm on
 /*Select all Parties that a Player Belongs to*/
 SELECT * from party INNER JOIN party_members on party.party_id = party_members.party_id WHERE party_members.player_id = 1;
 
+/*Select all characters from party */
+Select * from player_characters WHERE game_id = 4 AND owner_id <> 2;
+
 /*SELECT all games a player in */
-SELECT u.password, g.game_id, u.user_account_id from user_accounts u INNER JOIN party_members pm on u.user_account_id = pm.player_id INNER JOIN party p on pm.party_id = p.party_id INNER JOIN games g on p.game_id = g.game_id  WHERE email = '" + email + "'";
+select g.game_id, g.name, g.owner_id, g.image from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE pm.player_id = 1;
+
+/*SELECT game id and party id*/
+select g.game_id, p.party_id from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE g.name = 4 AND pm.player_id = 2;
+select g.game_id, p.party_id from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE g.game_id = 4 AND pm.player_id = 2;

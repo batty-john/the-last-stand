@@ -61,7 +61,7 @@
                                         
                                         <div class="card">
                                             <a href='/?game=<%=game.game_id %>' style="color:black;">
-                                            <img class="card-img-top img-fluid" src="assets/images/games/<%=game.game_id %>.jpg" alt="Card image cap">
+                                            <img class="card-img-top img-fluid" src="assets/images/games/<%=game.image %>" alt="Card image cap">
                                             <div class="card-body">
                                                 <h5 class="card-title"><%=game.name %></h5>
                                                 <p class="card-text"><%=game.description %></p>
@@ -76,11 +76,50 @@
                                         </div>
                                     
                                         <% }) %>
+
+                                        <div class="card" style="max-width: 500px;">
+                                            <a href='/createGame' style="color:black;">
+                                            <img class="card-img-top img-fluid" src="assets/images/games/new.jpg" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Create A New Game</h5>
+                                            </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="card" style="max-width: 500px;">
+                                            <a href='/joinGame' style="color:black;">
+                                            <img class="card-img-top img-fluid" src="assets/images/games/join.jpg" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Join a Friend's Game (Coming Soon)</h5>
+                                            </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- end row -->
+                        
+                        <% games.forEach(function(game){ %>
+                            <% if (game.game_id === session.game_id && session.user_id === game.owner_id) { %> 
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="my-4">Games</h4>
+                                        <div class="card-deck-wrapper">
+                                            <div class="card-deck">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Invite Your Friends to Join this Game!</h5>
+                                                        <p>Invite Link: https://last-stand-character-sheet.herokuapp.com/<%=game.invite_link%></p>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% }) %>
     
                         
                     </div> <!-- end container-fluid -->

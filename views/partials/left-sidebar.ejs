@@ -18,7 +18,8 @@
                         <span> Dashboard </span>
                     </a>
                 </li>
-<% if (characters) { %>
+                
+<% if (characters && session.game_id) { %>
                 <% if (characters.length === 1) { %>
                     <li>
                         <a href="javascript: void(0);">
@@ -60,7 +61,7 @@
                         </li>
                         <%} %>
                 <%} %>
-                <% if (party) { %>
+                <% if (party.length > 1 && session.game_id) { %>
 
                         <li>
                             <a href="javascript: void(0);">
@@ -116,12 +117,14 @@
                         </ul>
                 </li>
 
+                <% if(session.game_id) { %>
                 <li>
                     <a href="/createCharacter">
                         <i class="fe-user-plus"></i>
                         <span> Create Character </span>
                     </a>
                 </li>
+                <% } %>
 
                 
 

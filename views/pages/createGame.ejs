@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Abstack - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <%- include ../partials/topbar.ejs %>
+
+            <%- include ../partials/left-sidebar.ejs %>
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+                    
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Abstack</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
+                                            <li class="breadcrumb-item active">Starter</li>
+                                        </ol>
+                                    </div>
+                                    <!-- Basic Form Wizard -->
+                          <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-box">
+                                    <h4 class="header-title"><b>Create a New Game</b></h4>
+                                    <p class="sub-header">
+                                        Use the form below to create a new game.
+                                    </p>
+
+                                    <form id="basic-form" action="/submitNewGame" method="POST" enctype="multipart/form-data">
+                                        <div>
+                                            <h3>Basic Info</h3>
+                                            <section>
+                                                <div class="form-group clearfix">
+                                                    <label class="control-label " for="gameName">Game Title</label>
+                                                    <div class="">
+                                                        <input class="form-control required" id="gameName" name="gameName" type="text" onblur="createInviteLink()">
+                                                    </div>
+                                                </div>
+
+                                                <h4 class="header-title">Game Card Image</h4>
+                                                    <p class="sub-header">
+                                                        Upload an image so you're friends will recognize your game from their menus.
+                                                    </p>
+                                                    
+                                                <input name="image" type="file"/>
+                                                <input type="hidden" name="email" id="email" value="<%=user.email%>"/>
+                                                        
+                                                      
+            
+                                            
+                                        
+                                        
+
+                                            </section>
+                                            <h3>Modules</h3>
+                                            <section>
+                                                <h4>In the future, you'll be able to select which modules will be active for your game. As for now, everything is enabled and everything is unlocked free of charge!</h4>
+                                            </section>
+                                            <h3>Invite</h3>
+                                            <section>
+                                                <div class="form-group clearfix">
+                                                    <div class="col-lg-12">
+                                                        <ul class="list-unstyled w-list">
+                                                            <li><b>Game Name:</b> <span id="gameNameConfirm" >Game Name Goes Here</span> </li>
+                                                            <li><b>Invite Link:</b> <span id="inviteLink"></span></li>
+                                                        </ul>
+                                                        <input type="hidden" id="inviteLinkField" name="inviteLink" />
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <h3>Finish</h3>
+                                            <section>
+                                                <div class="form-group clearfix">
+                                                    <div class="col-lg-12">
+                                                        <div class="checkbox checkbox-primary">
+                                                            <input id="checkbox-h" type="checkbox">
+                                                            <label for="checkbox-h">
+                                                                I agree with the Terms and Conditions.
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End row -->
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title --> 
+                        
+                    </div> <!-- end container-fluid -->
+
+                </div> <!-- end content -->
+
+                <%- include ../partials/footer.ejs %>
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+        <%- include ../partials/right-sidebar.ejs %>
+
+        <!-- Vendor js -->
+        <script src="assets/js/vendor.min.js"></script>
+
+        <!--Form Wizard-->
+        <script src="assets/libs/jquery-steps/jquery.steps.min.js"></script>
+
+        <!-- Validation init js-->
+        <script src="assets/js/pages/wizard-init.js"></script>
+
+
+        <!-- App js -->
+        <script src="assets/js/app.min.js"></script>
+
+        <!-- CreateGame js -->
+        <script src="assets/js/createGame.js"></script>
+        
+    </body>
+</html>
