@@ -86,7 +86,7 @@ express()
                   console.log(response[0].game_id);
                   if(response[0].game_id == null) {
                     console.log('In if')
-                    req.session.game_id = 0;
+                    req.session.game_id = 1;
                   }
                   else {
                     console.log("in else")
