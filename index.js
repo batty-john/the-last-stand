@@ -394,7 +394,7 @@ express()
     console.log(req.session.user_id);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET current_health= " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET current_health= " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -409,7 +409,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET current_power_dice = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET current_power_dice = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -427,7 +427,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_strength = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_strength = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -445,7 +445,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_dexterity = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_dexterity = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -463,7 +463,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_constitution = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_constitution = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -481,7 +481,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_speed = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_speed = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -499,7 +499,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_intelligence = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_intelligence = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -517,7 +517,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_wisdom= " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_wisdom= " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -535,7 +535,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_charisma = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_charisma = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })
@@ -553,7 +553,7 @@ express()
     console.log(checkResult);
     if(checkResult[0].owner_id == req.session.user_id) {
     value = req.query.value;
-    sqlQuery("UPDATE player_characters SET temp_wit = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+    sqlQuery("UPDATE player_characters SET temp_wit = " + value + " WHERE player_character_id = " + req.query.id, function(err, result) {
       res.json({success: true});
       res.end();
     })

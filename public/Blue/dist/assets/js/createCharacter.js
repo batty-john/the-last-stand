@@ -55,7 +55,7 @@ function getRaces() {
             var cardSelect = document.createElement('a');
             cardSelect.classList.add("card-text");
             cardSelect.setAttribute("onclick", "selectRace(" + race.character_races_id + ")");
-            cardSelect.innerHTML= '<small class="text-muted">Select This Race</small>';
+            cardSelect.innerHTML= '<button class="btn btn-primary">Select This Race</button>';
             cardBody.appendChild(cardSelect);
 
             card.appendChild(cardBody);
@@ -101,7 +101,7 @@ function getClasses() {
             var cardSelect = document.createElement('a');
             cardSelect.classList.add("card-text");
             cardSelect.setAttribute("onclick", "selectClass(" + item.character_classes_id + ")");
-            cardSelect.innerHTML= '<small class="text-muted">Select This Class</small>';
+            cardSelect.innerHTML= '<button class="btn btn-primary">Select This Class</button>';
             cardBody.appendChild(cardSelect);
 
             card.appendChild(cardBody);
@@ -157,7 +157,7 @@ function getBackgrounds() {
             var cardSelect = document.createElement('a');
             cardSelect.classList.add("card-text");
             cardSelect.setAttribute("onclick", "selectMajorBackground(" + background.character_backgrounds_id + ")");
-            cardSelect.innerHTML= '<small class="text-muted">Select This Background</small>';
+            cardSelect.innerHTML= '<button class="btn btn-primary">Select This Background</button>';
             cardBody.appendChild(cardSelect);
 
             card.appendChild(cardBody);
@@ -213,7 +213,7 @@ function getMinorBackgrounds() {
             var cardSelect = document.createElement('a');
             cardSelect.classList.add("card-text");
             cardSelect.setAttribute("onclick", "selectMinorBackground(" + background.character_backgrounds_id + ")");
-            cardSelect.innerHTML= '<small class="text-muted">Select This Background</small>';
+            cardSelect.innerHTML= '<button class="btn btn-primary">Select This Background</button>';
             cardBody.appendChild(cardSelect);
 
             card.appendChild(cardBody);

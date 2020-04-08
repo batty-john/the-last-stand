@@ -52,7 +52,7 @@ function updateHealth() {
 
 function updateActions() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentActions").value,
+    value = document.getElementById("currentActions").innerHTML,
     url = '/updateHealth?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -66,7 +66,7 @@ function updateActions() {
 
 function updatePowerDice() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentPowerDice").value,
+    value = document.getElementById("currentPowerDice").innerHTML,
     url = '/updatePowerDice?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -80,7 +80,7 @@ function updatePowerDice() {
 
 function updateStrength() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentStrength").value,
+    value = document.getElementById("currentStrength").innerHTML,
     url = '/updateStrength?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -94,7 +94,7 @@ function updateStrength() {
 
 function updateDexterity() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentDexterity").value,
+    value = document.getElementById("currentDexterity").innerHTML,
     url = '/updatedexterity?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -108,7 +108,7 @@ function updateDexterity() {
 
 function updateConstitution() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentConstitution").value,
+    value = document.getElementById("currentConstitution").innerHTML,
     url = '/updateConstitution?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -122,7 +122,7 @@ function updateConstitution() {
 
 function updateSpeed() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentSpeed").value,
+    value = document.getElementById("currentSpeed").innerHTML,
     url = '/updateSpeed?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -136,7 +136,7 @@ function updateSpeed() {
 
 function updateIntelligence () {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentIntelligence").value,
+    value = document.getElementById("currentIntelligence").innerHTML,
     url = '/updateIntelligence?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -150,7 +150,7 @@ function updateIntelligence () {
 
 function updateWisdom() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentWisdom").value,
+    value = document.getElementById("currentWisdom").innerHTML,
     url = '/updateWisdom?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -164,7 +164,7 @@ function updateWisdom() {
 
 function updateCharisma() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentCharisma").value,
+    value = document.getElementById("currentCharisma").innerHTML,
     url = '/updateCharisma?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
@@ -178,7 +178,7 @@ function updateCharisma() {
 
 function updateWit() {
     var urlParams = new URLSearchParams(window.location.search),
-    value = document.getElementById("currentWit").value,
+    value = document.getElementById("currentWit").innerHTML,
     url = '/updateWit?value=' + value + '&id=' + urlParams.get('id');
     AJAX('POST', url, function(err, result){
         if (err) {
