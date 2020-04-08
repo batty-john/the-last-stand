@@ -9,8 +9,12 @@ DROP TABLE IF EXISTS items CASCADE;
 DROP TABLE IF EXISTS games CASCADE;
 DROP TABLE IF EXISTS party CASCADE;
 DROP TABLE IF EXISTS character_backgrounds CASCADE;
-DROP TABLE IF EXISTS player_characters;
-DROP TABLE IF EXISTS party_members;
+DROP TABLE IF EXISTS player_characters CASCADE;
+DROP TABLE IF EXISTS party_members CASCADE;
+DROP TABLE IF EXISTS known_spells CASCADE;
+DROP TABLE IF EXISTS known_abilities CASCADE;
+DROP TABLE IF EXISTS class_spells CASCADE;
+DROP TABLE IF EXISTS class_abilities CASCADE;
 
 CREATE TABLE user_accounts (
     user_account_id     SERIAL     CONSTRAINT user_accounts_pk PRIMARY KEY   NOT NULL,
@@ -104,6 +108,10 @@ CREATE TABLE character_spells (
     character_spells_id    SERIAL      CONSTRAINT character_spells_pk PRIMARY KEY  NOT NULL,
     module_id        INTEGER            CONSTRAINT character_spells_fk REFERENCES modules(module_id) NOT NULL,
     name                VARCHAR(30) NOT NULL,
+    school              VARCHAR(30) NOT NULL,
+    actions             INTEGER     NOT NULL,
+    power_dice          INTEGER     DEFAULT 0,
+    damage              VARCHAR     DEFAULT 'none',
     xp_cost   INTEGER NOT NULL,
     description TEXT,
     created_by  INTEGER,
@@ -113,17 +121,23 @@ CREATE TABLE character_spells (
 );
 
 
-/*spell prereqs**/
 
-INSERT INTO character_spells  (module_id, name,             xp_cost, description,  created_by, created_date, last_updated_by, last_updated_date) 
-VALUES                        (1,         'Fireball',       100,     'You throw a ball of firey death at your opponenets dealing 3d3 + your spellcasting ability damage', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (2,         'Healing Burst',  150,     'You emit a burst of healing energy causing creatures within 10 feet of you to recover health equal to 1d10 + your spellcasting ability', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (3,         'Ice Wall',       275,     'You conjure a wall of solid ice that is 1 foot thick and 10 feet tall in the space in front of you', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (4,         'Sheild Self',    300,     'You conjure a sheild of magical energy which increases your armor and magical resistance by 2', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (5,         'Charged Shot',   125,     'You charge your weapon with negative energy and strike your opponent, causing ligning effects agasint them to be more effective', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (6,         'Holy Smite',     100,     'You call down the wrath of heaven upon your foe dealing 3d3 + your spellcasting ability damage', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (7,         'Cure Poison',    50,      'You render the poison in a persons bloodstream ineffective and harmless', 1, CURRENT_DATE, 1, CURRENT_DATE),
-                              (8,         'Blackflame',     10000,   'You conjure a black flame in your hand that burns your enemies with intense pain, dealing damage to both you and your opponent equal to 6d6 + your spellcasting ability', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+INSERT INTO character_spells  (module_id, name,             school,     actions,    power_dice, damage, xp_cost, description,  created_by, created_date, last_updated_by, last_updated_date) 
+VALUES                        (1,         'Fireball',       'Arcane',         2,          2,          '1d8',  100,     'You throw a ball of firey death at your opponenets dealing 3d3 + your spellcasting ability damage', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (2,         'Healing Burst',  'Divine',         3,          3,          '1d8',  150,     'You emit a burst of healing energy causing creatures within 10 feet of you to recover health equal to 1d10 + your spellcasting ability', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (3,         'Ice Wall',       'Nature',         2,          1,          '1d8',  275,     'You conjure a wall of solid ice that is 1 foot thick and 10 feet tall in the space in front of you', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (4,         'Sheild Self',    'Arcane',         1,          1,          '1d8',  300,     'You conjure a sheild of magical energy which increases your armor and magical resistance by 2', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (5,         'Charged Shot',   'Arcane',         2,          2,          '1d8',  125,     'You charge your weapon with negative energy and strike your opponent, causing ligning effects agasint them to be more effective', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (6,         'Holy Smite',     'Divine',         3,          3,          '1d8',  100,     'You call down the wrath of heaven upon your foe dealing 3d3 + your spellcasting ability damage', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (7,         'Cure Poison',    'Nature',         1,          1,          '1d8',  50,      'You render the poison in a persons bloodstream ineffective and harmless', 1, CURRENT_DATE, 1, CURRENT_DATE),
+                              (8,         'Blackflame',     'Arcane',         4,          6,          '1d8',  10000,   'You conjure a black flame in your hand that burns your enemies with intense pain, dealing damage to both you and your opponent equal to 6d6 + your spellcasting ability', 1, CURRENT_DATE, 1, CURRENT_DATE);
+
+/* TODO: spell prereqs**/
+
+
+
+
 
 CREATE TABLE character_classes (
     character_classes_id        SERIAL    CONSTRAINT character_classes_pk PRIMARY KEY,
@@ -148,9 +162,7 @@ VALUES                       (1,         'Warrior', 1000, 'You have learned to f
                              (8,         'Paladin', 1000, 'You have devoted yourself to the cause of a diety and inspire others to assist your cause...', 1, CURRENT_DATE, 1, CURRENT_DATE),
                              (3,         'Ryn-Ky', 1000, 'You have become a master at mixing advanced martial arts with powerful combat magic...', 1, CURRENT_DATE, 1, CURRENT_DATE);
 
-/*class prereqs */
-
-/*class abilities*/
+/*TODO: class prereqs */
 
 CREATE TABLE character_abilities (
     character_abilities_id        SERIAL     CONSTRAINT character_abilities_pk PRIMARY KEY,
@@ -164,8 +176,6 @@ CREATE TABLE character_abilities (
     last_updated_date DATE
 
 );
-
-/*SELECT * FROM character_abilities;*/
 
 INSERT INTO character_abilities (module_id, name,                   xp_cost,    description, created_by, created_date, last_updated_by, last_updated_date) 
     VALUES                      (1,         'Charge',               150,        'You rush at your enemy, and may attack without expending an action point if you advance more than 30 feet in a straight line to reach your opponent', 1, CURRENT_DATE, 1, CURRENT_DATE),
@@ -186,9 +196,104 @@ INSERT INTO character_abilities (module_id, name,                   xp_cost,    
                                 (8,         'Drask Regeneration',   150,        'You regain 1 hp per turn', 1, CURRENT_DATE, 1, CURRENT_DATE),
                                 (1,         'Gnomish Intellect',    150,        'You may reroll any knowledge check once', 1, CURRENT_DATE, 1, CURRENT_DATE);
 
-/*ability prereqs*/
 
-/*SELECT * FROM character_abilities;*/
+
+
+
+/*TODO: ability prereqs*/
+
+
+CREATE TABLE class_abilities (
+    character_abilities_id INTEGER CONSTRAINT class_abilities_fk1 REFERENCES character_abilities(character_abilities_id) NOT NULL,
+    character_classes_id INTEGER CONSTRAINT class_abilities_fk2 REFERENCES character_classes(character_classes_id) NOT NULL,
+    created_by  INTEGER,
+    created_date DATE,
+    last_updated_by INTEGER,
+    last_updated_date DATE
+);
+
+
+
+
+
+CREATE TABLE class_spells (
+    character_spells_id INTEGER CONSTRAINT class_spells_fk1 REFERENCES character_spells(character_spells_id) NOT NULL,
+    character_classes_id INTEGER CONSTRAINT class_spells_fk2 REFERENCES character_classes(character_classes_id) NOT NULL,
+    created_by  INTEGER,
+    created_date DATE,
+    last_updated_by INTEGER,
+    last_updated_date DATE
+);
+/*Warrior Class Spells */
+/*Warrior Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (1,                      1,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Wizard Class Spells */
+INSERT INTO class_spells (character_spells_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (1,                   2,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Wizard Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (2,                      2,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Ranger Class Spells */
+INSERT INTO class_spells (character_spells_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (5,                   3,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Ranger Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (3,                      3,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Rogue Class Spells */
+/*Rogue Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (4,                      4,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Bard Class Spells */
+INSERT INTO class_spells (character_spells_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (5,                   5,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Bard Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (5,                      5,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Cleric Class Spells */
+INSERT INTO class_spells (character_spells_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (2,                   6,                    1,          CURRENT_DATE, 1,               CURRENT_DATE),
+                         (4,                   6,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Cleric Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (6,                      6,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Paladin Class Spells */
+INSERT INTO class_spells (character_spells_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (4,                   8,                    1,          CURRENT_DATE, 1,               CURRENT_DATE),
+                         (6,                   8,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Paladin Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (8,                      8,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Gaurdian Class Spells */
+/*Gaurdian Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (7,                      7,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Ryn-Ky Class Spells */
+INSERT INTO class_spells (character_spells_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (4,                   9,                    1,          CURRENT_DATE, 1,               CURRENT_DATE),
+                         (1,                   9,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Ryn-Ky Class Abilities*/
+INSERT INTO class_abilities (character_abilities_id, character_classes_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (9,                      9,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+
+
+
+
 
 CREATE TABLE character_races (
     character_races_id          SERIAL     CONSTRAINT character_races_pk PRIMARY KEY  NOT NULL,
@@ -352,20 +457,30 @@ CREATE TABLE player_characters(
     survival_skill              INTEGER     DEFAULT 0,
     health_level                INTEGER     DEFAULT 1,
     max_health                  INTEGER     DEFAULT 20,
-    current_health              INTEGER     DEFAULT 20, 
+    current_health              INTEGER     DEFAULT 20,
+    backstory                   TEXT, 
     created_by                  INTEGER,
     created_date                DATE,
     last_updated_by             INTEGER,
     last_updated_date           DATE
 );
 
-CREATE TABLE character_abilities (
-    player_character_id         SERIAL      NOT NULL   CONSTRAINT character_abilities_pk PRIMARY KEY,
-    
-    created_by                  INTEGER,
-    created_date                DATE,
-    last_updated_by             INTEGER,
-    last_updated_date           DATE
+CREATE TABLE known_abilities (
+    character_abilities_id INTEGER CONSTRAINT known_abilities_fk1 REFERENCES character_abilities(character_abilities_id) NOT NULL,
+    player_character_id INTEGER CONSTRAINT known_abilities_fk2 REFERENCES player_characters(player_character_id) NOT NULL,
+    created_by  INTEGER,
+    created_date DATE,
+    last_updated_by INTEGER,
+    last_updated_date DATE
+);
+
+CREATE TABLE known_spells (
+    character_spells_id INTEGER CONSTRAINT known_spells_fk1 REFERENCES character_spells(character_spells_id) NOT NULL,
+    player_character_id INTEGER CONSTRAINT known_spells_fk2 REFERENCES player_characters(player_character_id) NOT NULL,
+    created_by  INTEGER,
+    created_date DATE,
+    last_updated_by INTEGER,
+    last_updated_date DATE
 );
 
 /*
@@ -432,3 +547,28 @@ select g.game_id, g.name, g.owner_id, g.image from games g INNER JOIN party p ON
 /*SELECT game id and party id*/
 select g.game_id, p.party_id from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE g.name = 4 AND pm.player_id = 2;
 select g.game_id, p.party_id from games g INNER JOIN party p ON p.game_id = g.game_id INNER JOIN party_members pm ON pm.party_id = p.party_id WHERE g.game_id = 4 AND pm.player_id = 2;
+
+/*DISPLAY INFO FOR CHARACTER SHEET*/
+SELECT *  FROM player_characters c 
+INNER JOIN (SELECT name AS race_name, character_races_id FROM character_races) AS r ON r.character_races_id = c.race 
+INNER JOIN (SELECT name AS class_name, character_classes_id FROM character_classes) AS cl ON cl.character_classes_id = c.class
+INNER JOIN (SELECT name AS major_background_name, character_backgrounds_id FROM character_backgrounds) AS b1 ON b1.character_backgrounds_id = c.major_background
+INNER JOIN (SELECT name AS minor_background_name, character_backgrounds_id FROM character_backgrounds) AS b2 ON b2.character_backgrounds_id = c.minor_background WHERE player_character_id = 1;
+
+/*SELECT KNOWN SPELLS BY CHARACTER_ID*/
+SELECT * FROM known_spells s INNER JOIN character_spells c ON s.character_spells_id = c.character_spells_id WHERE player_character_id = 1;
+
+/*SELECT KNOWN Abilities BY CHARACTER_ID*/
+SELECT * FROM known_abilities a INNER JOIN character_abilities c ON a.character_abilities_id = c.character_abilities_id WHERE player_character_id = 1;
+
+/*SELECT Abilities by Class */
+SELECT * FROM class_abilities ca1 INNER JOIN character_abilities ca2 ON ca1.character_abilities_id = ca2.character_abilities_id WHERE character_classes_id = 1;
+
+/*Insert Into Known Abilities */
+INSERT INTO known_abilities (character_abilities_id, player_character_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                      (2,                      1,                    1,          CURRENT_DATE, 1,               CURRENT_DATE),
+                            (9,                      1,                    1,          CURRENT_DATE, 1,               CURRENT_DATE);
+
+/*Insert Into Known Spells */
+INSERT INTO known_spells (character_spells_id, player_character_id, created_by, created_date, last_updated_by, last_updated_date)
+VALUES                   (1,                      1,                1,          CURRENT_DATE, 1,               CURRENT_DATE);

@@ -50,7 +50,7 @@
                                     </a>
                                     <ul class="nav-third-level nav" aria-expanded="false">
                                         <li><a href="/character?id=<%=character.player_character_id%>">Overview</a></li>
-                                        <li><a href="#">Spells</a></li>
+                                        <li><a href="/character?id=<%=character.player_character_id%>#spells">Spells</a></li>
                                         <li><a href="#">Abilities</a></li>
                                         <li><a href="#">Train</a></li>
                                         <li><a href="#">Journal</a></li>
@@ -77,8 +77,8 @@
                                     </a>
                                     <ul class="nav-third-level nav" aria-expanded="false">
                                         <li><a href="/character?id=<%=character.player_character_id%>">Overview</a></li>
-                                        <li><a href="#">Spells</a></li>
-                                        <li><a href="#">Abilities</a></li>
+                                        <li><a href="/character?id=<%=character.player_character_id%>#spells">Spells</a></li>
+                                        <li><a href="/character?id=<%=character.player_character_id%>#abilities">Abilities</a></li>
                                     </ul>
                                 </li>
                                 <% }) %>
@@ -86,6 +86,28 @@
                         </li>
                 <%} %>
                         
+
+                <% if(session.game_id) { %>
+                <li>
+                    <a href="/createCharacter">
+                        <i class="fe-user-plus"></i>
+                        <span> Create Character </span>
+                    </a>
+                </li>
+                <% } %>
+
+                
+
+                <li>
+                    <a href="javascript: void(0)">
+                        <i class="fe-box"></i>
+                        <span> Dice Roller </span>
+                    </a>
+                </li>
+                
+
+                <li class="menu-title mt-2">Coming Soon</li>
+
 
                 <li>
                     <a href="javascript: void(0);">
@@ -117,27 +139,6 @@
                         </ul>
                 </li>
 
-                <% if(session.game_id) { %>
-                <li>
-                    <a href="/createCharacter">
-                        <i class="fe-user-plus"></i>
-                        <span> Create Character </span>
-                    </a>
-                </li>
-                <% } %>
-
-                
-
-                <li>
-                    <a href="javascript: void(0)">
-                        <i class="fe-box"></i>
-                        <span> Dice Roller </span>
-                    </a>
-                </li>
-                
-
-                <li class="menu-title mt-2">Coming Soon</li>
-
                 <li>
                         <a href="javascript: void(0);">
                             <i class="fe-map"></i>
@@ -145,9 +146,9 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
-                                <li><a href="#">Google Maps</a></li>
-                                <li><a href="#">Vector Maps</a></li>
-                                <li><a href="#">Mapael Maps</a></li>
+                                <li><a href="#">World Maps</a></li>
+                                <li><a href="#">Dungeon Maps</a></li>
+                                <li><a href="#">City Maps</a></li>
                         </ul>
                     </li>
 

@@ -156,7 +156,63 @@ function getBackgrounds() {
 
             var cardSelect = document.createElement('a');
             cardSelect.classList.add("card-text");
-            cardSelect.setAttribute("onclick", "selectBackground(" + background.character_backgrounds_id + ")");
+            cardSelect.setAttribute("onclick", "selectMajorBackground(" + background.character_backgrounds_id + ")");
+            cardSelect.innerHTML= '<small class="text-muted">Select This Background</small>';
+            cardBody.appendChild(cardSelect);
+
+            card.appendChild(cardBody);
+            document.getElementById("races-deck").appendChild(card);
+
+        });
+
+
+    });
+}
+
+function getMinorBackgrounds() {
+
+    AJAX('GET', '/getBackgrounds', function (response) {
+
+        var backgrounds = JSON.parse(response);
+
+        backgrounds.forEach(function(background){
+            var card = document.createElement('div');
+            card.classList.add('card');
+            card.classList.add('wrap-card');
+            card.classList.add('background-card');
+            
+            /*
+            var image = document.createElement('img');
+            image.classList.add("card-img-top");
+            image.classList.add("img-fluid");
+            image.setAttribute('src', 'assets/images/background/' + background.name + '.jpg')
+            card.appendChild(image);
+            */
+
+            var cardBody = document.createElement('div');
+            cardBody.classList.add("card-body");
+
+            var cardTitle = document.createElement('h5');
+            cardTitle.classList.add("card-title");
+            cardTitle.innerHTML = background.name;
+            cardBody.appendChild(cardTitle);
+
+            var cardDescription = document.createElement('p');
+            cardDescription.classList.add("card-text");
+            cardDescription.innerHTML = background.description;
+            cardBody.appendChild(cardDescription);
+
+            /*
+            var cardTable = document.createElement('table');
+            cardTable.classList.add("race-stat-table");
+            cardTable.innerHTML = '<table class="race-stat-table"><tr><th>Str</th><th>Dex</th><th>Con</th><th>Speed</th><th>Int</th><th>Wis</th><th>Cha</th><th>Wit</th></tr>' + 
+            '<tr><td>' + race.strength_cost_adjust + '</td><td>' + race.dexterity_cost_adjust + '</td><td>' + race.constitution_cost_adjust + '</td><td>' + race.speed_cost_adjust + '</td><td>' + race.intelligence_cost_adjust + '</td><td>' + race.wisdom_cost_adjust + '</td><td>' + race.charisma_cost_adjust + '</td><td>' + race.wit_cost_adjust + '</td></tr></table>'
+            cardBody.appendChild(cardTable);
+            */
+
+            var cardSelect = document.createElement('a');
+            cardSelect.classList.add("card-text");
+            cardSelect.setAttribute("onclick", "selectMinorBackground(" + background.character_backgrounds_id + ")");
             cardSelect.innerHTML= '<small class="text-muted">Select This Background</small>';
             cardBody.appendChild(cardSelect);
 
@@ -201,7 +257,7 @@ function selectClass(id) {
         selectedRace = JSON.parse(response)[0];
         selectedRace.id = id;
         selectedRace.category = "Class"
-        timelineCard = createTimelineCard(selectedRace, 1);
+        timelineCard = createTimelineCard(selectedRace);
         
         button = document.getElementById("chooseClassButton")
         nextStep(button);
@@ -217,16 +273,41 @@ function selectClass(id) {
 
 }
 
-function selectBackground(id) {
+function selectMajorBackground(id) {
 
     AJAX('GET', '/getBackgrounds?id=' + id, function (response) {
         
         selectedBackground = JSON.parse(response)[0];
         selectedBackground.id = id;
-        selectedBackground.category = "Background"
+        selectedBackground.category = "MajorBackground"
         timelineCard = createTimelineCard(selectedBackground);
         
-        button = document.getElementById("chooseBackgroundButton")
+        button = document.getElementById("chooseMajorBackgroundButton")
+        nextStep(button);
+        deleteCards = document.getElementsByClassName('background-card');
+        //deleteCards.forEach(function(element){element.remove()})
+        while(deleteCards.length > 0) {
+            deleteCards[0].remove();
+        }
+        document.getElementById("timeline").insertBefore(timelineCard, button);
+
+        getMinorBackgrounds();
+        //nextStep(document.getElementById("chooseRaceButton"));
+        
+
+    })
+}
+
+function selectMinorBackground(id) {
+
+    AJAX('GET', '/getBackgrounds?id=' + id, function (response) {
+        
+        selectedBackground = JSON.parse(response)[0];
+        selectedBackground.id = id;
+        selectedBackground.category = "MinorBackground"
+        timelineCard = createTimelineCard(selectedBackground, 1);
+        
+        button = document.getElementById("chooseMinorBackgroundButton")
         nextStep(button);
         deleteCards = document.getElementsByClassName('background-card');
         //deleteCards.forEach(function(element){element.remove()})
@@ -336,7 +417,8 @@ function finalizeForm() {
 function submit() {
     var race = document.getElementById("race-timeline-item").getElementsByClassName("hidden-input")[0].value,
     characterClass = document.getElementById("class-timeline-item").getElementsByClassName("hidden-input")[0].value,
-    majorBackgroun = document.getElementById("background-timeline-item").getElementsByClassName("hidden-input")[0].value,
+    majorBackground = document.getElementById("major-background-timeline-item").getElementsByClassName("hidden-input")[0].value,
+    minorBackground = document.getElementById("minor-background-timeline-item").getElementsByClassName("hidden-input")[0].value,
     name = document.getElementById("name").value,
     hair = document.getElementById("hair").value,
     skin = document.getElementById("skin").value,
@@ -350,3 +432,5 @@ function submit() {
         document.getElementById("createCharacterForm").submit();
     }
 }
+
+window.addEventListener('load', startForm());

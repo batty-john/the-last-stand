@@ -51,16 +51,55 @@ express()
   })
   .get('/character', getMenuData, (req, res) => {
     
+    var count = 0,
+    id,
+    displayCharacter,
+    knownSpells,
+    knownAbilities;
+
     if(req.query.id) {
-      sqlQuery("SELECT * FROM player_characters WHERE player_character_id = " + req.query.id, function (request, result) {
-        displayCharacter = result[0];
-        res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter})
-      })
+       id = req.query.id
     }
     else {
-      displayCharacter = req.characters[0];
-      res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter})
+       id = req.characters[0];
     }
+      sqlQuery("SELECT *  FROM player_characters c "
+      + "INNER JOIN (SELECT name AS race_name, character_races_id FROM character_races) AS r ON r.character_races_id = c.race "
+      + "INNER JOIN (SELECT name AS class_name, character_classes_id FROM character_classes) AS cl ON cl.character_classes_id = c.class "
+      + "INNER JOIN (SELECT name AS major_background_name, character_backgrounds_id FROM character_backgrounds) AS b1 ON b1.character_backgrounds_id = c.major_background "
+      + "INNER JOIN (SELECT name AS minor_background_name, character_backgrounds_id FROM character_backgrounds) AS b2 ON b2.character_backgrounds_id = c.minor_background WHERE player_character_id= " + id, function (request, result) {
+        
+        displayCharacter = result[0];
+        console.log(displayCharacter);
+        count += 1;
+        if (count == 3) {
+        res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter, spells: knownSpells, abilities: knownAbilities})
+        }
+      })
+
+      sqlQuery("SELECT * FROM known_spells s INNER JOIN character_spells c ON s.character_spells_id = c.character_spells_id WHERE player_character_id = " + id, function (err, result) {
+
+        knownSpells = result;
+        console.log(knownSpells);
+        count +=1;
+        if(count == 3) {
+          res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter, spells: knownSpells, abilities: knownAbilities})
+        }
+
+
+      })
+
+      sqlQuery("SELECT * FROM known_abilities a INNER JOIN character_abilities c ON a.character_abilities_id = c.character_abilities_id WHERE player_character_id = " + id, function (err, result) {
+
+        knownAbilities = result;
+        console.log(knownAbilities);
+        count +=1;
+        if(count == 3) {
+          res.render('pages/character-sheet', {characters: req.characters, party: req.party, games: req.games, user: req.user[0],session: req.session, displayCharacter: displayCharacter, spells: knownSpells, abilities: knownAbilities})
+        }
+
+
+      })
 
   })
   .get('/login', (req,res) => {res.render('pages/login')})
@@ -87,10 +126,12 @@ express()
                   if(response[0].game_id == null) {
                     console.log('In if')
                     req.session.game_id = 1;
+                    req.session.party_id = 1;
                   }
                   else {
                     console.log("in else")
                     req.session.game_id = response[0].game_id;
+                    req.session.party_id = response[0].party_id;
                   }
 
                     req.session.user_id = response[0].user_account_id;
@@ -208,8 +249,8 @@ express()
   game_id = req.session.game_id,
   race = req.body.Race,
   characterClass = req.body.Class,
-  major_background = req.body.Background,
-  minor_background = 1,
+  major_background = req.body.MajorBackground,
+  minor_background = req.body.MinorBackground,
   name = req.body.name,
   hair = req.body.hair,
   skin = req.body.skin,
@@ -225,14 +266,73 @@ express()
   cha = 10,
   wis = 10;
   var sql = 'INSERT INTO player_characters (owner_id, game_id, party_id, race, class, major_background, minor_background, name, hair, skin, eyes, height, weight, strength, dexterity, constitution, speed, wit, intelligence, wisdom, charisma, created_by, created_date, last_updated_by, last_updated_date)' 
-  +     "VALUES      ("+ owner_id +", "+ game_id +", "+ party_id +", "+ race +", "+ characterClass +", "+ major_background +", "+ minor_background +",     '"+ name +"',   '"+ hair +"'   ,   '"+ skin +"'  , '"+ eyes +"',  '"+ height +"'  ,    "+ weight +", "+ str +", "+ dex +", "+ con +", "+ spd +", "+ wit +", "+ int +", "+ wis +", " + cha +", 1, CURRENT_DATE, 1, CURRENT_DATE)";
-  sqlQuery(sql, function(result) {
-    res.redirect('/')
-  })
+  +     "VALUES      ("+ owner_id +", "+ game_id +", "+ party_id +", "+ race +", "+ characterClass +", "+ major_background +", "+ minor_background +",     '"+ name +"',   '"+ hair +"'   ,   '"+ skin +"'  , '"+ eyes +"',  '"+ height +"'  ,    "+ weight +", "+ str +", "+ dex +", "+ con +", "+ spd +", "+ wit +", "+ int +", "+ wis +", " + cha +", 1, CURRENT_DATE, 1, CURRENT_DATE);"
+  + " SELECT player_character_id from player_characters WHERE name = '" + name + "' AND owner_id = " + owner_id;
+  sqlChainQuery(sql, function(err, result) {
 
-  
+    console.log(result[1].rows);
+    let count = 0,
+    character_id = result[1].rows[0].player_character_id;
 
+    sqlQuery("SELECT * FROM class_abilities ca1 INNER JOIN character_abilities ca2 ON ca1.character_abilities_id = ca2.character_abilities_id WHERE character_classes_id = " + characterClass, function(err, abilitiesResult) {
+      
+      console.log("----AbilitiesResult-----")
+      console.log(abilitiesResult);
+      console.log("Length: " + abilitiesResult.length)
+      let abilityInsertSQL = "INSERT INTO known_abilities (character_abilities_id, player_character_id, created_by, created_date, last_updated_by, last_updated_date) VALUES ";
+      for (let i = 0; i < abilitiesResult.length; i++) {
+        
+        abilityInsertSQL += "(" + abilitiesResult[i].character_abilities_id + ", " + character_id + ", 1,          CURRENT_DATE, 1,               CURRENT_DATE)";
+        if (i != abilitiesResult.length - 1) {
+          abilityInsertSQL += ", "
+        } else {
+          sqlQuery(abilityInsertSQL, function (err, deepResult) {
+            console.log("abilities inserted");
+            count++;
+            if(count == 2) {
+              console.log("Count")
+              res.redirect('/character?id=' + character_id)
+            }
+    
+          })
+        }
+      }
+
+      
+
+      sqlQuery("SELECT * FROM class_spells ca1 INNER JOIN character_spells ca2 ON ca1.character_spells_id = ca2.character_spells_id WHERE character_classes_id =  " + characterClass, function(err, spellsResult) {
+          var spellInsertSQL = "INSERT INTO known_spells (character_spells_id, player_character_id, created_by, created_date, last_updated_by, last_updated_date) VALUES ";
+          for (let j = 0; j < spellsResult.length; j++) {
+            spellInsertSQL += "(" + spellsResult[j].character_spells_id + ", " + character_id + ", 1,          CURRENT_DATE, 1,               CURRENT_DATE)";
+            if (j != spellsResult.length - 1) {
+              spellInsertSQL += ", "
+            } else {
+              sqlQuery(spellInsertSQL, function (err, deepResult) {
+                console.log("spells inserted");
+                count++
+                if(count == 2) {
+                res.redirect('/character?id=' + character_id)
+                }
+              })
+            }
+          }
+
+          if (spellsResult.length == 0) {
+            console.log("spells inserted");
+            count++
+            if(count == 2) {
+            res.redirect('/character?id=' + character_id)
+            }
+          }
+        })
+        
+
+      })
+      
+    })
+    
 })
+
 .post('/submitNewGame', (req,res) => {
 
     try {
@@ -269,10 +369,211 @@ express()
   
 
 })
+.post('/updateBackstory', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+      console.log(req.body)
+    var value = req.body.value;
+    sqlQuery("UPDATE player_characters SET backstory = '" + value + "' WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateHealth', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    console.log(req.session.user_id);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET current_health= " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+    }  
+    else {
+      res.json({success: false})
+    }
+  })
+})
+.post('/updatePowerDice', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET current_power_dice = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateStrength', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_strength = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateDexterity', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_dexterity = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateConstitution', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_constitution = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateSpeed', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_speed = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateIntelligence', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_intelligence = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateWisdom', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_wisdom= " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateCharisma', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_charisma = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+.post('/updateWit', (req, res) => {
+  sqlQuery("SELECT owner_id FROM player_characters WHERE player_character_id = " + req.query.id, function(err, checkResult){
+    console.log(checkResult);
+    if(checkResult[0].owner_id == req.session.user_id) {
+    value = req.query.value;
+    sqlQuery("UPDATE player_characters SET temp_wit = " + value + "WHERE player_character_id = " + req.query.id, function(err, result) {
+      res.json({success: true});
+      res.end();
+    })
+  }  
+  else {
+    res.json({success: false})
+  }
+
+  })
+  
+
+})
+
+
+
+
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
-  function sqlQuery (sql, callback) { 
+ function sqlQuery (sql, callback) { 
     
     
     console.log("SQL Query: " + sql);
@@ -282,11 +583,29 @@ express()
             callback(err)
         }
         if (res){
-          console.log("------------Result-------------");
-          console.log(res.rows);
-          console.log("------------End Result---------")
+          //console.log("------------Result-------------");
+          //console.log(res.rows);
+          //console.log("------------End Result---------")
           callback(null,res.rows);
         }
+})
+}
+
+function sqlChainQuery (sql, callback) { 
+    
+    
+  console.log("SQL Chain Query: " + sql);
+
+  pool.query(sql, (err, res) => {
+      if (err) {
+          callback(err)
+      }
+      if (res){
+        //console.log("------------Result-------------");
+        //console.log(res.rows);
+        //console.log("------------End Result---------")
+        callback(null,res);
+      }
 })
 }
 
@@ -381,6 +700,10 @@ express()
 
       });
 
+      
+      console.log("Game_id: " + req.session.game_id);
+      console.log("Party_id: " + req.session.party_id);
+      console.log("User_id: " + req.session.user_id);
       
     } else {
     req.session.redirect = req.url;
