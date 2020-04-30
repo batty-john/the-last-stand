@@ -62,7 +62,7 @@
     "flot.curvedlines": "^1.1.1",
     "fullcalendar": "^3.10.0",
     "gmaps": "^0.4.24",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-knob": "^1.2.11",
     "jquery-mapael": "^2.2.0",
     "jquery-mask-plugin": "^1.14.15",
